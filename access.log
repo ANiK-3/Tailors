@@ -1,0 +1,7 @@
+127.0.0.1 - - [23/Jun/2024:02:23:47 +0600] "GET / HTTP/1.1" 403 987 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"
+127.0.0.1 - - [23/Jun/2024:02:23:47 +0600] "GET /favicon.ico HTTP/1.1" 403 973 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"
+127.0.0.1 - - [23/Jun/2024:02:23:50 +0600] "GET / HTTP/1.1" 403 987 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"
+127.0.0.1 - - [23/Jun/2024:02:23:50 +0600] "GET /favicon.ico HTTP/1.1" 403 973 "http://localhost/" "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"
+127.0.0.1 - - [23/Jun/2024:02:24:45 +0600] "GET / HTTP/1.1" 403 987 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"
+127.0.0.1 - - [23/Jun/2024:02:24:48 +0600] "GET / HTTP/1.1" 403 987 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"
+127.0.0.1 - - [23/Jun/2024:02:25:04 +0600] "GET / HTTP/1.1" 403 988 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:124.0) Gecko/20100101 Firefox/124.0"

@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Role;
-use Illuminate\Http\Request;
 
-class UserController extends Controller
+use Illuminate\Http\Request;
+use App\Models\Role;
+
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $user = User::with('roles')->find(2);
-        return $user; // roles = fn
+        $roles = Role::find(1);
+        return $roles->users;
     }
 
     /**
@@ -22,8 +22,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        $user = User::find(2);
-        $user->roles()->sync([1, 2, 3]);
+        //
     }
 
     /**
@@ -37,14 +36,15 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(string $id)
     {
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit(string $id)
     {
         //
     }
@@ -52,7 +52,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -60,7 +60,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(string $id)
     {
         //
     }
