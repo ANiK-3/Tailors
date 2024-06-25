@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class UserController extends Controller
 {
@@ -70,5 +71,22 @@ class UserController extends Controller
     {
         Auth::logout();
         return redirect()->route('home');
+    }
+
+    public function adminDashboard()
+    {
+        return view('admin.dashboard');
+    }
+    public function customerDashboard()
+    {
+        return view('customer.dashboard');
+    }
+    public function tailorDashboard()
+    {
+        return view('tailor.dashboard');
+    }
+    public function defaultDashboard()
+    {
+        return view('default');
     }
 }

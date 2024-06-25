@@ -21,15 +21,19 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials, $req->has('remember'))) {
-            return redirect()->route('dashboard');
-        }
-        return back()->with('status', 'The provided credentials do not match our records.');
-    }
+            $roles = Auth::user()->roles->pluck('role');
 
-    public function dashboardPage()
-    {
-        if (Auth::check()) {
-            return view('index');
+            // Check the user's role and redirect
+            if ($roles->contains('admin') && ($roles->contains('customer') || $roles->contains('tailor'))) {
+                return redirect()->route('default.dashboard');
+                // return redirect()->route('admin.dashboard');
+            } elseif ($roles->contains('admin')) {
+                return redirect()->route('admin.dashboard');
+            } elseif ($roles->contains('customer')) {
+                return redirect()->route('customer.dashboard');
+            } elseif ($roles->conatains('tailor')) {
+                return redirect()->route('tailor.dashboard');
+            }
         }
         return back()->with('status', 'Username or Password is invalid.');
     }
