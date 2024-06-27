@@ -26,15 +26,18 @@ class LoginController extends Controller
             // Check the user's role and redirect
             if ($roles->contains('admin') && ($roles->contains('customer') || $roles->contains('tailor'))) {
                 return redirect()->route('default.dashboard');
-                // return redirect()->route('admin.dashboard');
             } elseif ($roles->contains('admin')) {
                 return redirect()->route('admin.dashboard');
             } elseif ($roles->contains('customer')) {
                 return redirect()->route('customer.dashboard');
-            } elseif ($roles->conatains('tailor')) {
+            } elseif ($roles->contains('tailor')) {
                 return redirect()->route('tailor.dashboard');
+            } else {
+                // auth user but with no roles
+                session()->flush();
+                return redirect()->route('login')->with('status', 'You can no access this email address.');
             }
         }
-        return back()->with('status', 'Username or Password is invalid.');
+        return redirect()->back()->withInput()->with('status', 'Username or Password is invalid.');
     }
 }

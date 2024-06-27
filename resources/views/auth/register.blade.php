@@ -5,7 +5,7 @@ Register
 @endsection
 
 @push('style')
-<link rel="stylesheet" href={{asset('css/custom.css')}}>
+<link rel="stylesheet" href={{mix('css/register.css')}}>
 @endpush
 
 @section('content')
@@ -54,6 +54,24 @@ Register
         @enderror
       </span>
     </div>
+
+    <label for="role">Select Role:</label><br>
+    <select id="role" name="role" required>
+      <option value="" selected disabled>-- Select Role --</option>
+      <option value="customer">Customer</option>
+      <option value="tailor">Tailor</option>
+    </select><br><br>
+
+    <div id="tailor-fields">
+      <label for="tailor_experience">Years of Experience:</label><br>
+      <input type="number" id="tailor_experience" name="tailor_experience" min="0"><br><br>
+    </div>
+
+    <div id="customer-fields">
+      <label for="body_measurement">Height:</label><br>
+      <input type="text" id="customer_height" name="customer_height"><br><br>
+    </div>
+
     <div class="mb-4 tex">
       <input type="submit" value="Register" class="btn btn-primary">
     </div>
@@ -64,6 +82,5 @@ Register
 @endsection
 
 @push('script')
-<script src="js/app.js"></script>
-<script src="js/bootstrap.js"></script>
+<script src="{{ mix('js/register.js') }}"></script>
 @endpush

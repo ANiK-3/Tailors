@@ -5,20 +5,23 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Middleware\RoleMiddleware;
 
 Route::view('/', 'index')->name('home');
 
 Route::resource('user', UserController::class);
 Route::resource('role', RoleController::class);
 
-Route::get('login', [LoginController::class, 'index'])->name('login');
-Route::post('login', [LoginController::class, 'login'])->name('auth.login');
+// Guest Routes
+Route::middleware('role:guest')->group(function () {
+  Route::get('login', [LoginController::class, 'index'])->name('login');
+  Route::post('login', [LoginController::class, 'login'])->name('auth.login');
 
-Route::get('logout', [UserController::class, 'logout'])->name('logout');
+  Route::get('register', [RegisterController::class, 'index'])->name('register');
+  Route::post('register', [RegisterController::class, 'register'])->name('auth.register');
 
-Route::get('register', [RegisterController::class, 'index'])->name('register');
-Route::post('register', [RegisterController::class, 'register'])->name('auth.register');
+  Route::get('logout', [UserController::class, 'logout'])->name('logout')->withoutMiddleware('role:guest');
+});
+
 
 // Admin Routes
 Route::middleware(['role:admin'])->group(function () {
@@ -27,7 +30,8 @@ Route::middleware(['role:admin'])->group(function () {
 
 // Customer Routes
 Route::middleware(['role:customer'])->group(function () {
-  Route::get('customer/dashboard', [UserController::class, 'customerDashboard'])->name('customer.dashboard');
+  Route::get('/dashboard', [UserController::class, 'customerDashboard'])->name('customer.dashboard');
+  Route::get('profile/{id}', [UserController::class, 'customerProfile'])->name('customer.profile');
 });
 
 // Tailor Routes

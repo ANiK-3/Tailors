@@ -7,6 +7,7 @@ use App\Models\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -80,6 +81,12 @@ class UserController extends Controller
     public function customerDashboard()
     {
         return view('customer.dashboard');
+    }
+    public function customerProfile(int $id)
+    {
+        Gate::authorize('view-profile', $id);
+        $user = User::findOrFail($id);
+        return $user;
     }
     public function tailorDashboard()
     {

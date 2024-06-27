@@ -5,7 +5,7 @@ Login
 @endsection
 
 @push('style')
-<link rel="stylesheet" href={{asset('css/custom.css')}}>
+<link rel="stylesheet" href={{mix('css/login.css')}}>
 @endpush
 
 @section('content')
@@ -52,15 +52,10 @@ Login
     </div>
 
     <div class="text-center"><a href="{{route('auth.register')}}">Don't have an account?</a></div>
-
-
-
-
   </form>
 </div>
 @endsection
 
 @push('script')
-<script src="js/app.js"></script>
-<script src="js/bootstrap.js"></script>
+<script src="{{ mix('js/register.js') }}"></script>
 @endpush

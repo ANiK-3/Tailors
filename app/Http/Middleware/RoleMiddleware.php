@@ -16,13 +16,20 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        $rolesdb = Auth::user()->roles()->pluck('role');
-
+        // Check if the user is authenticated
         if (Auth::check()) {
+            $rolesdb = Auth::user()->roles()->pluck('role');
+
+            // Check if the authenticated user has any of the specified roles
             foreach ($roles as $role) {
                 if ($rolesdb->contains($role)) {
                     return $next($request);
                 }
+            }
+        } else {
+            // If the user is not authenticated, check if 'guest' is one of the roles
+            if (in_array('guest', $roles)) {
+                return $next($request);
             }
         }
         return back()->with('status', 'You do not have access to this section.');
