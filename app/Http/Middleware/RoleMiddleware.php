@@ -28,7 +28,7 @@ class RoleMiddleware
             }
         } else {
             // If the user is not authenticated, check if 'guest' is one of the roles
-            if (in_array('guest', $roles)) {
+            if (in_array('Guest', $roles)) {
                 return $next($request);
             }
         }

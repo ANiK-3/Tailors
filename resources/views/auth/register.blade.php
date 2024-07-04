@@ -16,7 +16,7 @@ Register
 
     <div class="mb-3">
       <label for="name" class="form-label">Name:</label>
-      <input type="name" id="name" name="name" value="{{ old('name') }}" required class="form-control @error('name') is-invalid @enderror">
+      <input type="text" id="name" name="name" value="{{ old('name') }}" required class="form-control @error('name') is-invalid @enderror">
 
       <span class="text-danger">
         @error('name')
@@ -44,7 +44,7 @@ Register
         @enderror
       </span>
     </div>
-    <div class="mb-4">
+    <div class="mb-3">
       <label for="confirm_password" class="form-label">Confirm Password:</label>
       <input type="password" id="confirm_password" name="password_confirmation" required class="form-control @error('password_confirmation') is-invalid @enderror">
 
@@ -55,24 +55,49 @@ Register
       </span>
     </div>
 
-    <label for="role">Select Role:</label><br>
-    <select id="role" name="role" required>
-      <option value="" selected disabled>-- Select Role --</option>
-      <option value="customer">Customer</option>
-      <option value="tailor">Tailor</option>
-    </select><br><br>
+    <div class="mb-3">
+      <label for="role">Select Role:</label><br>
+      <select id="role" name="role" class=" form-select form-select" @error('role') is-invalid @enderror">
+
+        <option value="" selected disabled>-- Select Role --</option>
+        @foreach($roles as $role)
+        <option value="{{ $role->id }}">{{ $role->role }}</option>
+        @endforeach
+      </select>
+
+      <span class="text-danger">
+        @error('role')
+        {{$message}}
+        @enderror
+      </span>
+    </div>
 
     <div id="tailor-fields">
+      <label for="phone">Phone:</label><br>
+      <input type="number" id="phone" name="phone"><br><br>
+
       <label for="tailor_experience">Years of Experience:</label><br>
-      <input type="number" id="tailor_experience" name="tailor_experience" min="0"><br><br>
+      <input type="number" id="tailor_experience" name="tailor_experience" min="0">
     </div>
 
     <div id="customer-fields">
-      <label for="body_measurement">Height:</label><br>
-      <input type="text" id="customer_height" name="customer_height"><br><br>
+      <label for="phone" class="mb-1">Phone:</label><br>
+      <span class="phone-prefix">+880</span>
+      <input type="text" id="phone" name="phone" class="phone-input @error('phone') is-invalid @enderror" placeholder="Enter your Phone Number" maxlength="10" required value="{{old('phone')}}">
     </div>
 
-    <div class="mb-4 tex">
+    <div class="mb-3">
+      <label for="address" class="form-label">Address:</label>
+      <input type="text" id="address" name="address" value="{{ old('address') }}" required class="form-control @error('address') is-invalid @enderror">
+
+      <span class="text-danger">
+        @error('address')
+        {{$message}}
+        @enderror
+      </span>
+    </div>
+
+    <div class="mt-3 tex">
       <input type="submit" value="Register" class="btn btn-primary">
     </div>
 

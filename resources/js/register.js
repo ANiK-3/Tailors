@@ -14,9 +14,9 @@ selectRole.addEventListener("change", function (event) {
     customerFields.style.display = "none";
 
     // Show fields based on selected role
-    if (role === "tailor") {
-        tailorFields.style.display = "block";
-    } else if (role === "customer") {
+    if (role === "2") {
         customerFields.style.display = "block";
+    } else if (role === "3") {
+        tailorFields.style.display = "block";
     }
 });

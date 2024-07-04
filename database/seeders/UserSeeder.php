@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 'name' => $user->name,
                 'email' => $user->email,
                 'password' => $user->password,
+                'phone' => $user->phone,
             ]);
         });
     }

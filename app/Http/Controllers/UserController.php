@@ -80,7 +80,8 @@ class UserController extends Controller
     }
     public function customerDashboard()
     {
-        return view('customer.dashboard');
+        // return view('customer.dashboard');
+        return view('index');
     }
     public function customerProfile(int $id)
     {

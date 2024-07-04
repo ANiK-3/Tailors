@@ -16,6 +16,7 @@
   <h2>Content Not Found</h2>
   @endif
 
+  <script src="{{mix('js/app.js')}}"></script>
   @stack('script')
 </body>
 </html>

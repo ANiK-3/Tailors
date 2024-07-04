@@ -16,4 +16,9 @@ class Role extends Model
     {
         return $this->belongsToMany(User::class, 'user_role'); // user_role == pivot table
     }
+
+    public function getRoleAttribute($value)
+    {
+        return ucfirst($value);
+    }
 }

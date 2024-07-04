@@ -10,11 +10,12 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('user_role', function (Blueprint $table) {
+        Schema::create('user_otps', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('role_id')->references('id')->on('roles')->cascadeOnDelete();
-            // $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            // $table->foreignId('role_id')->constrained('roles')->cascadeOnDelete();
+            $table->string('otp')->nullable();
+            $table->timestamp('otp_expires_at')->nullable();
+            $table->timestamps();
         });
     }
 
@@ -23,6 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('otps');
     }
 };

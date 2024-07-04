@@ -16,5 +16,8 @@
         "sass": "^1.77.6",
         "sass-loader": "^14.2.1",
         "vite": "^5.0"
+    },
+    "dependencies": {
+        "@popperjs/core": "^2.11.8"
     }
 }

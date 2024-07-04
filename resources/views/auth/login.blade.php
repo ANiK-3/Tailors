@@ -51,6 +51,8 @@ Login
       <input type="submit" value="Login" class="btn btn-primary">
     </div>
 
+    <div class="text-center mb-3"><a href="{{route('otp.login')}}">Login With OTP</a></div>
+
     <div class="text-center"><a href="{{route('auth.register')}}">Don't have an account?</a></div>
   </form>
 </div>

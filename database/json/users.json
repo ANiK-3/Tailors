@@ -2,16 +2,19 @@
   {
     "name": "Mahfuz Chowdhury",
     "email": "cse_2012020117@lus.ac.bd",
-    "password": "12345678"
+    "password": "12345678",
+    "phone": "+8801752182020"
   },
   {
     "name": "Kaucher Hamid Chowdhury",
     "email": "cse_2012020118@lus.ac.bd",
-    "password": "12345678"
+    "password": "12345678",
+    "phone": "+8801741830159"
   },
   {
     "name": "Debosree Sarkar",
     "email": "cse_2022020026@lus.ac.bd",
-    "password": "12345678"
+    "password": "12345678",
+    "phone": "+8801728779028"
   }
 ]
