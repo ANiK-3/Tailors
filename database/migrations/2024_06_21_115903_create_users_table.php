@@ -17,6 +17,8 @@ return new class extends Migration {
             $table->string('password');
             $table->string('phone')->unique();
             $table->string('address');
+            $table->enum('gender', ['male', 'female', 'other'])->nullable();
+            $table->string('profile_picture')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('remember_token', 100)->nullable();
         });

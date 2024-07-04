@@ -10,9 +10,14 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('user_role', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('role_id')->references('id')->on('roles')->cascadeOnDelete();
+            $table->foreignId('status_id')->references('id')->on('statuses')->cascadeOnDelete();
+            $table->date('order_date');
+            $table->date('due_date');
+            $table->decimal('total_cost', 10, 2);
+            $table->timestamps();
         });
     }
 
@@ -21,6 +26,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_role');
+        Schema::dropIfExists('orders');
     }
 };

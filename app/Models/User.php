@@ -29,6 +29,21 @@ class User extends Authenticatable
         return $this->hasMany(UserOtp::class);
     }
 
+    public function measurements()
+    {
+        return $this->hasMany(Measurement::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
     public function setPasswordAttribute($value)
     {
         return $this->attributes['password'] = bcrypt($value);
