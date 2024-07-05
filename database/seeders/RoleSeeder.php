@@ -14,17 +14,21 @@ class RoleSeeder extends Seeder
      */
     public function run(): void
     {
-        $roles = [
-            ['role' => 'admin'],
-            ['role' => 'customer'],
-            ['role' => 'tailor']
-        ];
+        $roles = ['admin', 'customer', 'tailor'];
 
         foreach ($roles as $role) {
-            Role::create($role);
+            Role::create(['role' => $role]);
         }
 
-        $user = User::find(1);
-        $user->roles()->attach([1]);
+        $usersWithRoles = [
+            1 => 1,
+            2 => 1,
+            3 => 1,
+        ];
+
+        foreach ($usersWithRoles as $userId => $roleIds) {
+            $user = User::find($userId);
+            $user->roles()->attach($roleIds);
+        }
     }
 }

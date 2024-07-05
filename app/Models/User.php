@@ -24,6 +24,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'user_role'); // user_role == table name
     }
+    public function gender()
+    {
+        return $this->belongsTo(Gender::class);
+    }
     public function otps()
     {
         return $this->hasMany(UserOtp::class);

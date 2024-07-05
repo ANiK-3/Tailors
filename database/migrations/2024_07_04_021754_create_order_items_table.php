@@ -13,7 +13,6 @@ return new class extends Migration {
         Schema::create('order_items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->references('id')->on('orders')->cascadeOnDelete();
-            $table->enum('item_type', ['custom', 'ready_made']);
             $table->integer('item_id');
             $table->integer('quantity');
             $table->decimal('price', 10, 2);

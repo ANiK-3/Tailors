@@ -10,14 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('ready_made_clothes', function (Blueprint $table) {
+        Schema::create('genders', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->decimal('price', 10, 2);
-            $table->integer('stock_quantity');
-            $table->string('image')->nullable();
-            $table->timestamps();
+            $table->string('name')->unique();
         });
     }
 
@@ -26,6 +21,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('ready_made_clothes');
+        Schema::dropIfExists('genders');
     }
 };

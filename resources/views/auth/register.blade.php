@@ -72,6 +72,23 @@ Register
       </span>
     </div>
 
+    <div class="mb-3">
+      <label for="gender">Select Gender:</label><br>
+      <select id="gender" name="gender" class=" form-select form-select" @error('gender') is-invalid @enderror">
+
+        <option value="" selected disabled>-- Select Gender --</option>
+        @foreach($genders as $gender)
+        <option value="{{ $gender->id }}">{{ $gender->name }}</option>
+        @endforeach
+      </select>
+
+      <span class="text-danger">
+        @error('gender')
+        {{$message}}
+        @enderror
+      </span>
+    </div>
+
     <div id="tailor-fields">
       <label for="phone">Phone:</label><br>
       <input type="number" id="phone" name="phone"><br><br>
