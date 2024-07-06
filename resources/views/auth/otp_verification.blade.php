@@ -12,12 +12,6 @@ Verification
 
 <div>
   <div class="container-md mt-5">
-    @if (session('status'))
-    <div class="alert alert-success" role="alert">
-      {{session('status')}}
-    </div>
-    @endif
-
     <form action="{{ route('otp.getLogin') }}" method="post">
       @csrf
 

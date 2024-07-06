@@ -7,6 +7,7 @@
   <title>Tailors - @yield('title','website')</title>
   <link rel="stylesheet" href={{ mix('css/app.css') }}>
   @stack('style')
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
 </head>
 <body>
 
@@ -16,6 +17,22 @@
   <h2>Content Not Found</h2>
   @endif
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+  <script>
+    toastr.options = {
+      "closeButton": true
+      , "newestOnTop": true
+      , "progressBar": true
+    }
+    @if(Session::has('success'))
+    toastr.success("{{session('success')}}");
+    @elseif(Session::has('error'))
+    toastr.error("{{session('error')}}");
+
+    @endif
+
+  </script>
   <script src="{{mix('js/app.js')}}"></script>
   @stack('script')
 </body>

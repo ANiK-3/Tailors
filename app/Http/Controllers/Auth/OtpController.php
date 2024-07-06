@@ -31,11 +31,11 @@ class OtpController extends Controller
         $user = User::where('phone', $phoneWithCC)->first();
 
         if (!$user) {
-            return redirect()->route('otp.login')->with('status', 'User not found');
+            return redirect()->route('otp.login')->with('error', 'User not found');
         }
         // Prevent generating OTP if email is not verified
         if (is_null($user->email_verified_at)) {
-            return redirect()->route('otp.login')->with('status', 'Email is not verified, Please verify.');
+            return redirect()->route('otp.login')->with('error', 'Email is not verified, Please verify.');
         }
 
         $otp = rand(123456, 999999); // generate random 6 digit otp
@@ -62,7 +62,7 @@ class OtpController extends Controller
             'contactMethod' => 'phone'
         ]);
 
-        return redirect()->route('otp.verification')->with('status', 'OTP has been sent to your phone.');
+        return redirect()->route('otp.verification')->with('success', 'OTP has been sent to your phone.');
     }
 
     public function generateForEmail($credentials)
@@ -74,7 +74,7 @@ class OtpController extends Controller
         //already available but expired
 
         if (!$user) {
-            return redirect()->route('otp.login')->with('status', 'User not found');
+            return redirect()->route('otp.login')->with('error', 'User not found');
         }
 
         $otp = rand(123456, 999999); // generate random 6 digit otp
@@ -100,7 +100,7 @@ class OtpController extends Controller
             'otp_data' => $email,
             'contactMethod' => 'email'
         ]);
-        return redirect()->route('otp.verification')->with('status', 'OTP has been sent to your Email.');
+        return redirect()->route('otp.verification')->with('success', 'OTP has been sent to your Email.');
     }
 
     public function verification()
@@ -118,11 +118,11 @@ class OtpController extends Controller
 
         // Check if OTP is found
         if (!$userOtp) {
-            return redirect()->back()->with('status', 'Your OTP is not correct');
+            return redirect()->back()->with('error', 'Your OTP is not correct');
         }
         // Check if OTP has expired
         if (now()->isAfter($userOtp->otp_expires_at)) {
-            return redirect()->back()->with('status', 'Your OTP has expired');
+            return redirect()->back()->with('error', 'Your OTP has expired');
         }
 
         $user = $userOtp->user;
@@ -142,15 +142,15 @@ class OtpController extends Controller
 
         // Check the user's role and redirect accordingly
         if (Gate::allows('admin') && Gate::any(['customer', 'tailor'])) {
-            return redirect()->route('default.dashboard');
+            return redirect()->route('default.dashboard')->with('success', 'Login Successful');
         } elseif (Gate::allows('admin')) {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.dashboard')->with('success', 'Login Successful');
         } elseif (Gate::allows('customer')) {
-            return redirect()->route('customer.dashboard');
+            return redirect()->route('customer.dashboard')->with('success', 'Login Successful');
         } elseif (Gate::allows('tailor')) {
-            return redirect()->route('tailor.dashboard');
+            return redirect()->route('tailor.dashboard')->with('success', 'Login Successful');
         }
-        return redirect()->route('otp.login')->with('status', 'You can not access this account.');
+        return redirect()->route('otp.login')->with('error', 'You can not access this account.');
     }
 
     public function resendOtp(Request $req)
@@ -163,20 +163,20 @@ class OtpController extends Controller
             $phone = "+880" . $otpData;
             $user = User::where('phone', $phone)->first();
             if (!$user) {
-                return redirect()->back()->with('status', 'Unable to resend OTP. Please try again.');
+                return redirect()->back()->with('error', 'Unable to resend OTP. Please try again.');
             }
             $response = $this->generate($req);
         } else {
             $email = $otpData;
             $user = User::where('email', $email)->first();
             if (!$user) {
-                return redirect()->back()->with('status', 'Unable to resend OTP. Please try again.');
+                return redirect()->back()->with('error', 'Unable to resend OTP. Please try again.');
             }
             $credentials = ['email' => $email];
             $response = $this->generateForEmail($credentials);
         }
         // logger('Resend OTP Response', ['response' => $response]);
-        return redirect()->route('otp.verification')->with('status', 'OTP has been resent.');
+        return redirect()->route('otp.verification')->with('success', 'OTP has been resent.');
     }
 
     public function sendSMS($phone, $otp)

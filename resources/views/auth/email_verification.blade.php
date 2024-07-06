@@ -1,12 +1,11 @@
-<div>
-  <div class="container mt-5">
-    @if (session('status'))
-    <div class="alert alert-success" role="alert">
-      {{session('status')}}
-    </div>
-    @endif
-  </div>
+@extends('layouts.app')
 
+@section('title')
+OTP Login
+@endsection
+
+@section('content')
+<div>
   <form action="{{ route('otp.getLogin') }}" method="post">
     @csrf
 
@@ -27,3 +26,4 @@
 
   </form>
 </div>
+@endsection

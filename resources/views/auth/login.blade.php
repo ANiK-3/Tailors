@@ -10,12 +10,6 @@ Login
 
 @section('content')
 <div class="container mt-3">
-  <div>
-    @if (session('status'))
-    {{session('status')}}
-    @endif
-  </div>
-
   <h2 class="mb-4 text-center">Login</h2>
   <form method="POST" action="{{ route('auth.login') }}">
     @csrf

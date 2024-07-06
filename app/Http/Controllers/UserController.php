@@ -77,7 +77,7 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'Logout Successful');
     }
 
     public function adminDashboard()
@@ -122,7 +122,7 @@ class UserController extends Controller
 
         // Compare incoming data with original data
         if ($originalData == $incomingData) {
-            return redirect()->back()->with('status', 'Nothing Updated.');
+            return redirect()->back()->with('success', 'Nothing Updated.');
         }
 
         $credentials = $req->validate([
@@ -155,9 +155,9 @@ class UserController extends Controller
             $user->update([
                 'profile_picture' => $path
             ]);
-            return redirect()->back()->with('status', 'Successfully Updated.');
+            return redirect()->back()->with('success', 'Successfully Updated.');
         }
-        return redirect()->back()->with('status', 'Successfully Updated.');
+        return redirect()->back()->with('success', 'Successfully Updated.');
     }
 
 

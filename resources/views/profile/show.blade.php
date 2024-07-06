@@ -13,13 +13,6 @@ Profile
 @include('layouts.partials.profile.sidebar')
 
 <div class="container">
-  <div class="container mt-5">
-    @if (session('status'))
-    <div class="alert alert-success" role="alert">
-      {{session('status')}}
-    </div>
-    @endif
-  </div>
 
   <div class="section">
     <div class="card text-center">

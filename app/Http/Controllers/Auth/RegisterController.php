@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Role;
 use App\Models\Gender;
@@ -37,7 +36,7 @@ class RegisterController extends Controller
         $user = User::create($credentials);
 
         if (!$user) {
-            redirect()->back()->with('status', 'Unable to create a account.');
+            redirect()->back()->with('error', 'Unable to create an account.');
         }
 
         // Attach roles to the user
@@ -45,6 +44,6 @@ class RegisterController extends Controller
         //  Generate Otp then send it to an email
         $generateOtp = new OtpController();
         $generateOtp->generateForEmail($credentials);
-        return redirect()->route('otp.verification')->with('status', 'OTP has been sent to your Email.');
+        return redirect()->route('otp.verification')->with('success', 'OTP has been sent to your Email.');
     }
 }
