@@ -9,8 +9,8 @@ Profile
 @endpush
 
 @section('content')
-@include('layouts.partials.navbar')
-@include('layouts.partials.profile.sidebar')
+@includeIf('layouts.partials.navbar')
+@includeIf('customer.partials.sidebar')
 
 <div class="container">
 

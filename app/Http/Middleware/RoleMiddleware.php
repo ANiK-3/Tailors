@@ -32,6 +32,6 @@ class RoleMiddleware
                 return $next($request);
             }
         }
-        return back()->with('status', 'You do not have access to this section.');
+        return redirect()->route('home')->with('error', 'You do not have access to this section.');
     }
 }

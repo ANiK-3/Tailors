@@ -27,12 +27,18 @@
            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
          </button>
        </form>
-       @if (auth()->check())
+       @auth
+       @can('customer')
        <a href="{{ route('customer.profile') }}">{{ "Profile" }}</a>
+       @endcan
+       <form action="{{ route('logout') }}" method="post" class="mx-3">
+         @csrf
+         <input type="submit" value="{{"Logout"}}">
+       </form>
        @else
        <a href="{{route('login')}}" class=" btn btn-success">{{ "Login" }}</a>
        {{-- <a href="{{route('register')}}" class=" btn btn-primary">SignUp</a> --}}
-       @endif
+       @endauth
 
      </div>
    </div>

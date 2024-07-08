@@ -144,7 +144,7 @@ class OtpController extends Controller
         if (Gate::allows('admin') && Gate::any(['customer', 'tailor'])) {
             return redirect()->route('default.dashboard')->with('success', 'Login Successful');
         } elseif (Gate::allows('admin')) {
-            return redirect()->route('admin.dashboard')->with('success', 'Login Successful');
+            return redirect()->route('admin.index')->with('success', 'Login Successful');
         } elseif (Gate::allows('customer')) {
             return redirect()->route('customer.dashboard')->with('success', 'Login Successful');
         } elseif (Gate::allows('tailor')) {

@@ -33,7 +33,8 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('view_profile', function (User $user, $user_id) {
             return $user->id === $user_id;
         });
-
-
+        Gate::define('view_measurements', function (User $user, $user_id) {
+            return $user->id === $user_id;
+        });
     }
 }
