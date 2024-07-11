@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+        .navbar {
+            height: 60px;
+            width: 100%;
+            background-color: #000000;
+            align-items: center;
+            position: fixed;
+            top: 0px;
+            display: flex;
+            align-items: center;
+            color: aliceblue;
+            justify-content: space-evenly;
+        }
+
+
+        .nav-logo {
+            height: 50px;
+            width: 100px;
+        }
+
+        .logo {
+            background-image: url('tailorLogo5.jpg');
+            height: 50px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            color: #cccccc;
+
+        }
+
+        .border {
+            border: 2px solid transparent;
+        }
+
+        .border:hover {
+            border: 2px solid white;
+        }
+
+        /**box2*/
+
+        .add-first {
+            color: #cccccc;
+            font-size: 0.85rem;
+            margin-left: 15px;
+        }
+
+        .add-second {
+            font-size: 1rem;
+            margin-left: 3px;
+        }
+
+        .add-icon {
+            display: flex;
+            align-items: center;
+        }
+
+        /**Box3*/
+
+        .nav-search {
+
+            display: flex;
+            height: 40px;
+            width: 620px;
+            border-radius: 4px;
+            justify-content: space-evenly;
+        }
+
+        .search-select {
+            width: 40px;
+            background-color: #f3f3f3;
+            text-align: center;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            border: none;
+
+        }
+
+        .search-input {
+            width: 100%;
+            font-size: 1rem;
+            border: none;
+        }
+
+        .search-icon {
+            width: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            background-color: #f08804;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+
+        }
+
+        .navtext {
+            text-decoration: none;
+            font-size: 20px;
+            color: aliceblue;
+        }
+
+
+
+
+
+
+
+
+        .content {
+            margin-top: 90px;
+        }
+
+
+        img {
+            height: 100px;
+            width: 100px;
+            background-size: cover;
+            object-fit: cover;
+        }
+
+        .profile {
+            display: flex;
+        }
+
+        .details {
+
+            display: grid;
+            grid-template-columns: repeat(2, 0fr);
+            width: 190px;
+            /* height: 500px;
+            background-color: aqua;
+            flex-wrap:wrap ;
+            flex-basis: 35%;
+             */
+        }
+
+        /* .details >div{
+           width: 700px;
+           height: 200px;
+        } */
+        .cborder {
+            border: 2px solid;
+            height: 100px;
+            width: 45vw;
+            margin: 10px;
+            padding: 3px;
+            border-radius: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 20px;
+            color: #000000;
+
+        }
+
+        .shopName {
+            color: #f08804;
+            margin-left: 8px;
+            font-family: sans-serif, Arial, Helvetica, sans-serif;
+            font-size: 1.5rem;
+        }
+
+        .shopPlace {
+            margin-left: 8px;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        p {
+            font-size: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+    <header>
+        <div class="navbar">
+            <div class="nav-logo border">
+                <div class="logo"></div>
+            </div>
+
+            <div class="nav-address border">
+                <p class="add-first">Deliver to</p>
+                <div class="add-icon">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <p class="add-second">Sylhet</p>
+                </div>
+            </div>
+
+            <div class="nav-search">
+                <select name="" class="search-select">
+                    <option value="">All</option>
+                </select>
+                <input type="text" placeholder="Search" class="search-input">
+                <div class="search-icon">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </div>
+            </div>
+
+            <div class="home border"><a href="index.html" class="navtext">Home</a></div>
+            <div class="home border"><a href="profile.html" class="navtext">Profile</a></div>
+            <div class="home border"><a href="AboutUs.html" class="navtext">Order Details</a></div>
+            <div class="home border"><a href="AboutUs.html" class="navtext">About Us</a></div>
+
+        </div>
+    </header>
+
+
+
+
+
+
+    <div class="content">
+        <div class="profile">
+            <div class="shopProfileImage">
+                <img src="prf.jpg" alt="">
+            </div>
+            <div class="shopNamePlace">
+                <div class="shopName">Kaucher Tailor</div>
+                <div class="shopPlace">Fenchugonj,Sylhet</div>
+            </div>
+        </div>
+        <div class="details">
+            <a href="">
+                <div class="div1 cborder">Shirt <p>T 300</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="div2 cborder">Pant <p>Tk 400</p>
+                </div>
+            </a>
+
+
+            <a href="">
+                <div class="div3 cborder">Three Piece <p>Tk 800</p>
+                </div>
+            </a>
+            <a href="">
+                <div class="div4 cborder">Cout Tk 5000</div>
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

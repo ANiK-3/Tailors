@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+        }
+        
+
+        input {
+            width: 500px;
+            height: 40px;
+            font-size: 1.2rem;
+        }
+        label{
+            font-size: 1.2rem;
+        }
+
+        .image {
+            height: 200px;
+            width: 200px;
+            object-fit: cover;
+            display: flex;
+            /* background-image: url('prf.jpg');
+            background-size: cover;
+            background-repeat: no-repeat; */
+        }
+
+        .button {
+            margin-top: 10px;
+            border-radius: 5px;
+            background-color: #f08804;
+            border: none;
+            display: block;
+            width: 500px;
+            height: 40px;
+            font-size: 1rem;
+        }
+
+        #file-path{
+          display: none;
+        }
+    </style>
+
+
+
+</head>
+
+<body>
+    <form action="profile.html">
+        <div class="image">
+            <img src="prf.jpg" alt="">
+        </div>
+        <label for="file-path"> <i class="fa-solid fa-camera"></i></label>
+        <input type="file" accept="image/jpg,image/png,image/jpeg" id="file-path"class="user-file"><br>
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="fname" value="Kaucher Hamid"><br>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lname" value="Chowdhury"><br>
+        <label for="phone">Phone</label><br>
+        <input type="number" name="" id="" value="01741830159"><br>
+        <label for="email">Gmail</label><br>
+        <input type="email" value="mahkaucher@gmail.com">
+        <input type="submit" class="button" value="Update">
+    </form>
+    <button onclick="
+    " class="button">change Password</button>
+</body>
+
+<script>
+   const profilePic = document.querySelector(".image img");
+const userFile = document.querySelector(".user-file");
+userFile.onchange = function () {
+  profilePic.src = URL.createObjectURL(userFile.files[0]);
+}
+ </script>
+</html>

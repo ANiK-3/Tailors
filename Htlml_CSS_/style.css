@@ -1,0 +1,273 @@
+*{
+    padding: 0;
+    font-family: Arial;
+    border: border-box;
+    margin: 0;
+   
+}
+
+body{
+    /* background-image: url('https://cdn.pixabay.com/photo/2022/03/13/01/41/tailoring-7065117_960_720.jpg'); */
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow-x: hidden;
+    
+}
+  
+ 
+ 
+
+
+.navbar{
+    height: 60px;
+    width: 100%;
+    background-color: #000000;
+    align-items: center;
+    position: fixed;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    color: aliceblue;
+    justify-content: space-evenly;
+}
+
+
+.nav-logo{
+    height: 50px;
+    width: 100px;
+}
+
+.logo{
+    background-image: url('tailorLogo5.jpg');
+    height: 50px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: #cccccc;
+   
+}
+
+.border{
+    border: 2px solid transparent;
+}
+.border:hover{
+    border: 2px solid white;
+}
+
+/**box2*/
+
+.add-first{
+    color: #cccccc;
+    font-size: 0.85rem;
+    margin-left: 15px;
+}
+.add-second{
+    font-size: 1rem;
+    margin-left: 3px;
+}
+.add-icon{
+    display: flex;
+    align-items: center;
+}
+
+/**Box3*/
+
+.nav-search{
+
+    display: flex;
+    height: 40px;
+    width: 620px;
+   border-radius: 4px;
+   justify-content: space-evenly;
+}
+
+.search-select{
+    width: 40px;
+    background-color: #f3f3f3;
+    text-align: center;
+    border-top-left-radius:4px ;
+    border-bottom-left-radius: 4px;
+    border: none;
+    
+}
+.search-input{
+    width: 100%;
+    font-size: 1rem;
+    border: none;
+}
+.search-icon{
+    width: 45px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    background-color: #f08804;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+
+}
+
+a{
+    text-decoration: none;
+    font-size: 20px;
+    color: aliceblue;
+}
+/* #logo{
+    color: #f08804;
+    font-size: 30px;
+    width: 30px;
+    height: 30px;
+} */
+ /* #searchbtn{
+    
+    border-radius: 25px;
+    height: 30px;
+    width: 60px;
+    background-color: #f08804;
+    
+ }
+#searchinput{
+    height: 30px;
+    width: 300px;
+    border: none;
+    border-radius: 25px;
+    display: inline-block;
+    padding-left: 20px;
+}
+
+
+a{
+    margin-right: 130px;
+    text-decoration: none;
+    font-size: 20px;
+    color: aliceblue;
+}
+
+.content{
+   padding-left: 10px;
+   padding-right: 10px;
+  
+    
+} */
+
+.card{
+    height: 400px;
+    width: 300px;
+    /* border: 2px solid rgb(243, 17, 17); */
+    background-color: black;
+    display: inline-block;
+    font-size: 2em;
+    border-radius: 10px;
+    align-items: center;
+    margin: 10px;
+}
+.pic{
+    height:200px;
+    width: 270px;
+    background-color: #f08804;
+    margin: 15px;
+    background-image: url('https://media.istockphoto.com/id/585184072/photo/hands-of-a-woman-sewing-fabrics.webp?b=1&s=612x612&w=0&k=20&c=7Il8hre7OcznKiE2q7FYrSImIMF1kuYH9Y298P-gOrI=');
+    background-size: cover;
+    /* transition: all; */
+    /* transition-duration: 1s; */
+
+}
+.pic:hover{
+    transform: scale(1.1);
+    transition-duration: 0.5s;
+}
+
+
+/* .dot{
+    background-color: rgb(0, 0, 0);
+    height: 20px;
+    width: 20px;
+    border-radius: 10px;
+    display: inline-block;
+    position: relative;
+ 
+} */
+
+
+footer{
+    background-color: black;
+    color: aliceblue;
+    text-align: center;
+    width: 100vw;
+    bottom: 0px;
+
+}
+
+
+
+/* 
+html{
+    height: 100%;
+}
+
+* {
+    margin: 0%;
+    padding: 0%;
+   
+}
+
+h1{
+    background-color: antiquewhite;
+}
+
+
+
+body {
+    background-image: url('https://images.pexels.com/photos/159711/books-bookstore-book-reading-159711.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin: 0%;
+    padding: 0%;
+
+}
+.login-box{
+    position: absolute;
+    top: 40%;
+    left: 35%;
+    width: 400px;
+    padding: 80px;
+    transform: translate(-50% -50%);
+    background-color: black;
+    box-sizing: border-box;
+    box-shadow: 0 15 25 rgb(0, 0, 0.6);
+    border-radius: 10px;
+
+}
+
+.login-box h2{
+    margin: 0 0 30px;
+    color: aliceblue;
+    text-align: center;
+
+}
+
+.login-box .user-box input{
+    width: 100%;
+    padding: 10px 0;
+    font-size: 16px;
+    color: aliceblue;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #fff;
+}
+.login-box .user-box{
+    position: relative;
+}
+
+.login-box .user-box label{
+   
+    top: 0;
+    left: 0;
+    color: #fff;
+    padding: 10px 0;
+    overflow: hidden;
+    pointer-events: none;
+    transition: .5s;
+} */
