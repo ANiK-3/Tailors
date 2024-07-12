@@ -90,17 +90,20 @@ Register
     </div>
 
     <div id="tailor-fields">
-      <label for="phone">Phone:</label><br>
-      <input type="number" id="phone" name="phone"><br><br>
-
       <label for="tailor_experience">Years of Experience:</label><br>
       <input type="number" id="tailor_experience" name="tailor_experience" min="0">
     </div>
 
-    <div id="customer-fields">
+    <div class="mb-3">
       <label for="phone" class="mb-1">Phone:</label><br>
       <span class="phone-prefix">+880</span>
       <input type="text" id="phone" name="phone" class="phone-input @error('phone') is-invalid @enderror" placeholder="Enter your Phone Number" maxlength="10" required value="{{old('phone')}}">
+
+      <span class="text-danger">
+        @error('phone')
+        {{$message}}
+        @enderror
+      </span>
     </div>
 
     <div class="mb-3">

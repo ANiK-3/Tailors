@@ -8,13 +8,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
 use App\Models\Gender;
+use App\Models\Tailor;
 
 class CustomerController extends Controller
 {
     public function customerDashboard()
     {
+        $tailors = Tailor::get();
+        return view('index', compact('tailors'));
         // return view('customer.dashboard');
-        return view('index');
     }
     public function Profile()
     {
@@ -29,28 +31,30 @@ class CustomerController extends Controller
 
     public function UpdateProfile(Request $req)
     {
-        $user = User::find(Auth::user()->id);
+        $user = User::findOrFail(Auth::user()->id);
 
         // original data
-        $originalData = [
-            'name' => $user->name,
-            'phone' => $this->removeCCprefix($user->phone),
-            'gender_id' => $user->gender_id,
-            'address' => $user->address,
-        ];
+        // $originalData = [
+        //     'name' => $user->name,
+        //     'phone' => $this->removeCCprefix($user->phone),
+        //     'gender_id' => $user->gender_id,
+        //     'address' => $user->address,
+        //     'profile_picture' => $user->profile_picture,
+        // ];
         // incoming data
-        $incomingData = $req->only(array_keys($originalData));
+        // $incomingData = $req->only(array_keys($originalData));
 
         // Compare incoming data with original data
-        if ($originalData == $incomingData) {
-            return redirect()->back()->with('success', 'Nothing Updated.');
-        }
+        // if ($originalData == $incomingData) {
+        //     return redirect()->back()->with('success', 'Nothing Updated.');
+        // }
 
         $credentials = $req->validate([
             'name' => 'required|string|max:255',
             'phone' => 'required|unique:users|numeric|regex:/^1[3-9][0-9]{8}$/',
             'gender_id' => 'required',
-            'address' => 'required|string|max:255'
+            'address' => 'required|string|max:255',
+            'profile_picture' => 'image|max:3000'
         ]);
 
         $user->update([
@@ -67,11 +71,7 @@ class CustomerController extends Controller
                 @unlink($old_profile_picture);
             }
 
-            $profile_picture = $req->validate([
-                'profile_picture' => 'image|max:3000'
-            ]);
-
-            $path = $profile_picture['profile_picture']->store('images', 'public');
+            $path = $credentials['profile_picture']->store('images', 'public');
 
             $user->update([
                 'profile_picture' => $path
@@ -88,5 +88,4 @@ class CustomerController extends Controller
             return $phone = substr($phone, 4);
         }
     }
-
 }

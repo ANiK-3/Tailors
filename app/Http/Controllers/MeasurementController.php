@@ -13,9 +13,9 @@ class MeasurementController extends Controller
 {
     public function show(User $user)
     {
-        if (Gate::denies('view_measurements', $user->id)) {
-            abort(401);
-        }
+        // if (Gate::denies('view_measurements', $user->id)) {
+        //     abort(401);
+        // }
 
         if (Gate::allows('tailor')) {
             $measurements = $user->measurements()->where('tailor_id', Auth::id())->first();
@@ -30,19 +30,31 @@ class MeasurementController extends Controller
 
         // if the user is tailor
         if (Gate::allows('tailor')) {
-            Measurement::updateOrCreate([
+            Measurement::updateOrCreate(
                 [
                     'user_id' => $user->id,
-                    'tailor_id' => Auth::id()
+                    'tailor_id' => Auth::id(),
                 ],
                 $measurement
-            ]);
-        } else {
-            $user->measurements()->update(
+            );
+            return redirect()->route('measurements.show', $user->id)->with('success', 'Measurement saved successfully!');
+        }
+        $measurementExists = Measurement::where('user_id', $user->id)
+            ->whereNull('tailor_id')
+            ->exists();
+
+        if ($measurementExists) {
+            // Update the existing measurement
+            Measurement::update(
+                ['user_id' => $user->id] +
                 $measurement
             );
+        } else {
+            // Create a new measurement
+            Measurement::create([
+                'user_id' => $user->id,
+            ] + $measurement);
         }
-
         return redirect()->route('measurements.show', $user->id)->with('success', 'Measurement saved successfully!');
     }
 }

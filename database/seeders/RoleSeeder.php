@@ -30,5 +30,14 @@ class RoleSeeder extends Seeder
             $user = User::find($userId);
             $user->roles()->attach($roleIds);
         }
+
+        // Attach Tailor Roles to fake users
+        $length = User::get()->count();
+        if ($length > 3) {
+            for ($i = 4; $i <= $length; $i++) {
+                $user = User::find($i);
+                $user->roles()->attach(3);
+            }
+        }
     }
 }

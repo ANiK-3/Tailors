@@ -9,10 +9,15 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TailorController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Auth\OtpController;
+use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
+use App\Models\Tailor;
 
 
-Route::view('/', 'index')->name('home');
+Route::get('/', function () {
+  $tailors = Tailor::with('user')->get();
+  return view('index', compact('tailors'));
+})->name('home');
 
 // OTP Route
 Route::controller(OtpController::class)->group(function () {
@@ -48,8 +53,13 @@ Route::middleware(['role:Customer'])->group(function () {
     Route::get('home', 'customerDashboard')->name('customer.dashboard');
     Route::get('profile', 'Profile')->name('customer.profile');
     Route::post('profile', 'UpdateProfile')->name('customer.update_profile');
+    Route::get('tailor/{id}/appointment', [AppointmentController::class, 'show'])->name('appointment.show');
+    Route::post('appointment', [AppointmentController::class, 'create'])->name('appointment.create');
+    Route::post('/appointments/{appointment}', [AppointmentController::class, 'updateStatus'])->name('appointment.updateStatus');
   });
 });
+
+Route::get('tailor/{id}', [TailorController::class, 'show'])->name('tailor.show');
 
 //  Tailor Routes
 Route::middleware(['role:Tailor'])->group(function () {
@@ -59,7 +69,7 @@ Route::middleware(['role:Tailor'])->group(function () {
 });
 
 // Global Routes
-Route::middleware('role:Admin,Customer,Tailor')->group(function () {
+Route::middleware('role:Customer,Tailor')->group(function () {
   Route::get('measurements/{user}', [MeasurementController::class, 'show'])->name('measurements.show');
   Route::post('measurements/{user}', [MeasurementController::class, 'store'])->name('measurements.store');
 });

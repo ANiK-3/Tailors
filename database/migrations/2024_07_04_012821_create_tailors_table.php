@@ -13,7 +13,10 @@ return new class extends Migration {
         Schema::create('tailors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->string('specialization');
+            $table->string('shop_image')->nullable();
+            $table->string('shop_name');
+            $table->text('bio');
+            $table->string('specialty');
             $table->timestamps();
         });
     }

@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('measurements', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('tailor_id')->nullable()->references('id')->on('tailors')->cascadeOnDelete();
+            $table->foreignId('tailor_id')->nullable()->references('id')->on('users')->cascadeOnDelete();
             $table->decimal('neck', 5, 2)->nullable();
             $table->decimal('chest', 5, 2)->nullable();
             $table->decimal('bust', 5, 2)->nullable();

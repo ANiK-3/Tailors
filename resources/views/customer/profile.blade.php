@@ -21,7 +21,7 @@ Profile
       </div>
       <div class=" card-body">
         <div>
-          <form action="{{ route('customer.update_profile',$user->id) }}" method="post" enctype="multipart/form-data">
+          <form action="{{ route('customer.update_profile') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="profile-picture">
               <div class=" container mt-5 text-center mb-3">

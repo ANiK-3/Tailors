@@ -33,6 +33,11 @@ class User extends Authenticatable
         return $this->hasMany(UserOtp::class);
     }
 
+    public function tailor()
+    {
+        return $this->hasOne(Tailor::class);
+    }
+
     public function measurements()
     {
         return $this->hasMany(Measurement::class);

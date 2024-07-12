@@ -10,8 +10,12 @@ class Status extends Model
     use HasFactory;
     protected $guarded = [];
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
     public function orders()
     {
-        return $this->hasMany(Order::class);
+        return $this->has(Order::class);
     }
 }

@@ -23,24 +23,36 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
-            'role' => 'required',
-            'phone' => 'required|unique:users|numeric|regex:/^1[3-9][0-9]{8}$/',
-            'gender' => 'required',
+            'role' => 'required|exists:roles,id',
+            'gender' => 'required|exists:genders,id',
+            'phone' => 'required|numeric|regex:/^1[3-9][0-9]{8}$/|unique:users',
             'address' => 'required|string|max:255'
         ]);
 
         $countryCode = "+880";
         $credentials['phone'] = $countryCode . $credentials['phone'];
         $role = $credentials['role'];
-        unset($credentials['role']);
-        $user = User::create($credentials);
-
+        $user = User::create([
+            'name' => $credentials['name'],
+            'email' => $credentials['email'],
+            'password' => $credentials['password'],
+            'phone' => $credentials['phone'],
+            'gender_id' => $credentials['gender'],
+            'address' => $credentials['address'],
+        ]);
         if (!$user) {
             redirect()->back()->with('error', 'Unable to create an account.');
         }
-
         // Attach roles to the user
         $user->roles()->attach($role);
+
+        // if the user is tailor
+        if ($role == 3) {
+            $user->tailor()->create([
+                'specialization' => 'custom',
+            ]);
+        }
+
         //  Generate Otp then send it to an email
         $generateOtp = new OtpController();
         $generateOtp->generateForEmail($credentials);

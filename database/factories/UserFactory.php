@@ -18,8 +18,12 @@ class UserFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'email' => fake()->email(),
-            'password' => fake()->password(6),
+            'email' => fake()->unique()->safeEmail(),
+            'password' => bcrypt('password'),
+            'phone' => '+8801' . $this->faker->numberBetween(100000000, 999999999),
+            'gender_id' => fake()->randomElement([1, 2]),
+            'address' => fake()->address(),
+            'email_verified_at' => now(),
         ];
     }
 }

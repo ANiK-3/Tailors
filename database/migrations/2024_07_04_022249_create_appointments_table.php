@@ -12,11 +12,11 @@ return new class extends Migration {
     {
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('tailor_id')->references('id')->on('tailors')->cascadeOnDelete();
-            $table->date('appointment_date');
-            $table->time('appointment_time');
-            $table->string('purpose');
+            $table->foreignId('customer_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('tailor_id')->nullable()->references('id')->on('tailors')->cascadeOnDelete();
+            $table->dateTime('appointment_date');
+            $table->foreignId('status_id')->references('id')->on('statuses')->cascadeOnDelete();
+            $table->boolean('fabric_provided_by_customer');
             $table->timestamps();
         });
     }

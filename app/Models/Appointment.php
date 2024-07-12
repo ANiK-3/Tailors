@@ -10,7 +10,7 @@ class Appointment extends Model
     use HasFactory;
     protected $guarded = [];
 
-    public function user()
+    public function customer()
     {
         return $this->belongsTo(User::class);
     }
@@ -18,5 +18,10 @@ class Appointment extends Model
     public function tailor()
     {
         return $this->belongsTo(Tailor::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
     }
 }
