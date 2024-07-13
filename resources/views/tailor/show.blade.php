@@ -1,27 +1,47 @@
 @extends('layouts.app')
+
+@push('style')
+<link rel="stylesheet" href="{{ mix('css/show_tailor.css') }}">
+@endpush
+
 @section('content')
 @includeIf('layouts.partials.navbar')
-<div class="container vh-100">
-  <div class="row">
-    <div class="col">
-      <div class="card">
-        <img src="{{ $tailor->shop_image ? asset('/storage/' . $tailor->shop_image) : asset('/storage/images/' . 'default_tailor.jpeg') }}" alt="Card Shop Image" style="width: 200px">
 
-        <div class="card-body">
-          <h5 class="card-title">{{ $tailor->shop_name }}</h5>
-          <p class="card-text">{{ $tailor->bio }}</p>
-          <p class="card-text"><strong>Specialty:</strong> {{ $tailor->specialty }}</p>
-          <p class="card-text"><strong>Phone:</strong> {{ $tailor->user->phone }}</p>
-          <p class="card-text"><strong>Address:</strong> {{ $tailor->user->address }}</p>
-          @can('customer')
-          <button>
-            <a href="{{route('appointment.show',$tailor->id)}}">Hire</a>
-          </button>
-          @endcan
-        </div>
-      </div>
+<div class="content">
+  <div class="profile">
+    <div class="shopProfileImage">
+      <img src="{{ $tailor->shop_image ? asset('/storage/' . $tailor->shop_image) : asset('/storage/images/' . 'default_tailor.jpg') }}" alt="Shop Image">
+    </div>
+    <div class="shopNamePlace">
+      <div class="shopName">{{ $tailor->shop_name }}</div>
+      <div class="shopPlace">{{ $tailor->user->address }}</div>
     </div>
   </div>
+  <div class="details">
+    <a href="">
+      <div class="div1 cborder">
+        Shirt
+        <p>T 300</p>
+      </div>
+    </a>
+    <a href="">
+      <div class="div2 cborder">
+        Pant
+        <p>Tk 400</p>
+      </div>
+    </a>
+
+    <a href="">
+      <div class="div3 cborder">
+        Three Piece
+        <p>Tk 800</p>
+      </div>
+    </a>
+    <a href="">
+      <div class="div4 cborder">Cout Tk 5000</div>
+    </a>
+  </div>
 </div>
+
 @includeIf('layouts.partials.footer')
 @endsection

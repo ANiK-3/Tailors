@@ -1,0 +1,63 @@
+/* Repeated Style starts*/
+/* Repeated Style ends */
+.content {
+  margin-top: 90px;
+}
+
+img {
+  height: 100px;
+  width: 100px;
+  background-size: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.profile {
+  display: flex;
+}
+
+.details {
+  display: grid;
+  grid-template-columns: repeat(2, 0fr);
+  width: 190px;
+  /* height: 500px;
+          background-color: aqua;
+          flex-wrap:wrap ;
+          flex-basis: 35%;
+           */
+}
+
+/* .details >div{
+           width: 700px;
+           height: 200px;
+        } */
+.cborder {
+  border: 2px solid;
+  height: 100px;
+  width: 45vw;
+  margin: 10px;
+  padding: 3px;
+  border-radius: 10px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 20px;
+  color: #000000;
+}
+
+.shopName {
+  color: #f08804;
+  margin-left: 8px;
+  font-family: sans-serif, Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+}
+
+.shopPlace {
+  margin-left: 8px;
+  font-family: "Times New Roman", Times, serif;
+}
+
+p {
+  font-size: 15px;
+}

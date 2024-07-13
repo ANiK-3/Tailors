@@ -1,45 +1,68 @@
  <!-- Navigation-->
- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-   <div class="container px-4 px-lg-5">
-     <a class="navbar-brand" href="{{ route('home') }}">Tailor</a>
-     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-       <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
-         <li class="nav-item"><a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a></li>
-         <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-         <li class="nav-item dropdown">
-           <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
-           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-             <li><a class="dropdown-item" href="#!">All Products</a></li>
-             <li>
-               <hr class="dropdown-divider" />
-             </li>
-             <li><a class="dropdown-item" href="#!">Popular Items</a></li>
-             <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
-           </ul>
-         </li>
-       </ul>
+ <nav>
+   <div class="navbar">
+     <a href="{{ route('home') }}">
+       <div class="nav-logo border">
+         <div class="logo">
+           <img src="{{ asset('/storage/images/' . 'tailorLogo5.jpg') }}" alt="Tailor">
+         </div>
+       </div>
+     </a>
 
-       <form class="d-flex mx-3">
-         <button class="btn btn-outline-dark" type="submit">
-           <i class="bi-cart-fill me-1"></i>
-           Cart
-           <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-         </button>
-       </form>
-       @auth
-       @can('customer')
-       <a href="{{ route('customer.profile') }}">{{ "Profile" }}</a>
-       @endcan
-       <form action="{{ route('logout') }}" method="post" class="mx-3">
-         @csrf
-         <input type="submit" value="{{"Logout"}}">
-       </form>
-       @else
-       <a href="{{route('login')}}" class=" btn btn-success">{{ "Login" }}</a>
-       {{-- <a href="{{route('register')}}" class=" btn btn-primary">SignUp</a> --}}
-       @endauth
-
+     <div class="nav-address border">
+       <p class="add-first">Deliver to</p>
+       <div class="add-icon">
+         <i class="fa-solid fa-location-dot"></i>
+         <p class="add-second">Sylhet</p>
+       </div>
      </div>
+
+     <div class="nav-search">
+       <select name="" class="search-select">
+         <option value="">All</option>
+       </select>
+       <input type="text" placeholder="Search" class="search-input">
+       <div class="search-icon">
+         <i class="fa-solid fa-magnifying-glass"></i>
+       </div>
+     </div>
+
+     <div class="home border"><a href="{{ route('home') }}">Home</a></div>
+     <div class="home border"><a href="{{ route('about_us') }}">About Us</a></div>
+     @auth
+     @can('customer')
+     <div class="home border"><a href="{{ route('customer.profile') }}">Profile</a></div>
+     <div class="home border"><a href="#">Order Details</a></div>
+     @elsecan('admin')
+     <div class="home border"><a href="{{ route('admin.index') }}">Dashboard</a></div>
+     @elsecan('tailor')
+     <div class="home border"><a href="{{ route('tailor.dashboard') }}">Dashboard</a></div>
+     @endcan
+     <div class="home border">
+       <form action="{{ route('logout') }}" method="post">
+         @csrf
+         <input type="submit" value="Logout" style="background-color: #f08804;">
+       </form>
+     </div>
+
+     @else
+     <div class="home border" style="background-color: #f08804;">
+       <a href="{{route('login')}}">Login</a>
+     </div>
+     {{-- <a href="{{route('register')}}" class=" btn btn-primary">SignUp</a> --}}
+     @endauth
+
    </div>
  </nav>
+
+ <!-- <header>
+        <div id="navbar">
+            <a id="logo" href="">Tailor.com</a>
+            <input id="searchinput" placeholder="Search" type="text">
+            <button id="searchbtn" style="margin-right: 90px;">Search</button>
+            <a href="#">Home</a>
+            <a href="">Info</a>
+            <a href="contactUs.html">Contact Us</a>
+            <a href="">Profile</a>
+        </div>
+    </header> -->

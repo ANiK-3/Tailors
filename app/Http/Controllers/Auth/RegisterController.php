@@ -20,7 +20,7 @@ class RegisterController extends Controller
     public function register(Request $req)
     {
         $credentials = $req->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|min:2|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|confirmed|min:8',
             'role' => 'required|exists:roles,id',

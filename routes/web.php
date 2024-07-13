@@ -19,6 +19,10 @@ Route::get('/', function () {
   return view('index', compact('tailors'));
 })->name('home');
 
+Route::get('about_us', function () {
+  return view('about_us');
+})->name('about_us');
+
 // OTP Route
 Route::controller(OtpController::class)->group(function () {
   Route::get('otp/login', 'index')->name('otp.login');
@@ -51,8 +55,10 @@ Route::middleware(['role:Admin'])->group(function () {
 Route::middleware(['role:Customer'])->group(function () {
   Route::controller(CustomerController::class)->group(function () {
     Route::get('home', 'customerDashboard')->name('customer.dashboard');
-    Route::get('profile', 'Profile')->name('customer.profile');
-    Route::post('profile', 'UpdateProfile')->name('customer.update_profile');
+    Route::get('profile', 'profile')->name('customer.profile');
+    Route::get('profile/update', 'showUpdateProfile')->name('customer.show_update_profile');
+    Route::post('profile/update', 'UpdateProfile')->name('customer.update_profile');
+
     Route::get('tailor/{id}/appointment', [AppointmentController::class, 'show'])->name('appointment.show');
     Route::post('appointment', [AppointmentController::class, 'create'])->name('appointment.create');
     Route::post('/appointments/{appointment}', [AppointmentController::class, 'updateStatus'])->name('appointment.updateStatus');
@@ -64,7 +70,7 @@ Route::get('tailor/{id}', [TailorController::class, 'show'])->name('tailor.show'
 //  Tailor Routes
 Route::middleware(['role:Tailor'])->group(function () {
   Route::controller(TailorController::class)->group(function () {
-    Route::get('tailor/dashboard', 'tailorDashboard')->name('tailor.dashboard');
+    Route::get('dashboard', 'tailorDashboard')->name('tailor.dashboard');
   });
 });
 

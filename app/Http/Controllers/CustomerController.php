@@ -18,7 +18,13 @@ class CustomerController extends Controller
         return view('index', compact('tailors'));
         // return view('customer.dashboard');
     }
-    public function Profile()
+    public function profile()
+    {
+        $user = User::findOrFail(Auth::user()->id);
+        return view('customer.profile', compact('user'));
+    }
+
+    public function showUpdateProfile()
     {
         if (Gate::denies('view_profile', Auth::user()->id)) {
             abort(401);
@@ -26,7 +32,8 @@ class CustomerController extends Controller
         $user = User::findOrFail(Auth::user()->id);
         $user->phone = $this->removeCCprefix($user->phone);
         $genders = Gender::get();
-        return view('customer.profile', compact('user', 'genders'));
+
+        return view('customer.update_profile', compact('user', 'genders'));
     }
 
     public function UpdateProfile(Request $req)
@@ -50,7 +57,7 @@ class CustomerController extends Controller
         // }
 
         $credentials = $req->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|min:2|max:255',
             'phone' => 'required|unique:users|numeric|regex:/^1[3-9][0-9]{8}$/',
             'gender_id' => 'required',
             'address' => 'required|string|max:255',

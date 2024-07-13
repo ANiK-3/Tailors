@@ -9588,19 +9588,6 @@ module.exports = Array.isArray || function (arr) {
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./resources/sass/login.scss":
 /*!***********************************!*\
   !*** ./resources/sass/login.scss ***!
@@ -9631,6 +9618,71 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************!*\
   !*** ./resources/sass/profile.scss ***!
   \*************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/sass/app.scss":
+/*!*********************************!*\
+  !*** ./resources/sass/app.scss ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/sass/home.scss":
+/*!**********************************!*\
+  !*** ./resources/sass/home.scss ***!
+  \**********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/sass/navbar.scss":
+/*!************************************!*\
+  !*** ./resources/sass/navbar.scss ***!
+  \************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/sass/about_us.scss":
+/*!**************************************!*\
+  !*** ./resources/sass/about_us.scss ***!
+  \**************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+// extracted by mini-css-extract-plugin
+
+
+/***/ }),
+
+/***/ "./resources/sass/show_tailor.scss":
+/*!*****************************************!*\
+  !*** ./resources/sass/show_tailor.scss ***!
+  \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -14423,10 +14475,14 @@ const isThenable = (thing) =>
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/js/app": 0,
+/******/ 			"css/show_tailor": 0,
+/******/ 			"css/about_us": 0,
+/******/ 			"css/navbar": 0,
+/******/ 			"css/home": 0,
+/******/ 			"css/app": 0,
 /******/ 			"css/profile": 0,
 /******/ 			"css/register": 0,
-/******/ 			"css/login": 0,
-/******/ 			"css/app": 0
+/******/ 			"css/login": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -14476,11 +14532,15 @@ const isThenable = (thing) =>
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["css/profile","css/register","css/login","css/app"], () => (__webpack_require__("./resources/js/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["css/profile","css/register","css/login","css/app"], () => (__webpack_require__("./resources/sass/app.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/profile","css/register","css/login","css/app"], () => (__webpack_require__("./resources/sass/login.scss")))
-/******/ 	__webpack_require__.O(undefined, ["css/profile","css/register","css/login","css/app"], () => (__webpack_require__("./resources/sass/register.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/profile","css/register","css/login","css/app"], () => (__webpack_require__("./resources/sass/profile.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/show_tailor","css/about_us","css/navbar","css/home","css/app","css/profile","css/register","css/login"], () => (__webpack_require__("./resources/js/app.js")))
+/******/ 	__webpack_require__.O(undefined, ["css/show_tailor","css/about_us","css/navbar","css/home","css/app","css/profile","css/register","css/login"], () => (__webpack_require__("./resources/sass/app.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/show_tailor","css/about_us","css/navbar","css/home","css/app","css/profile","css/register","css/login"], () => (__webpack_require__("./resources/sass/home.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/show_tailor","css/about_us","css/navbar","css/home","css/app","css/profile","css/register","css/login"], () => (__webpack_require__("./resources/sass/navbar.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/show_tailor","css/about_us","css/navbar","css/home","css/app","css/profile","css/register","css/login"], () => (__webpack_require__("./resources/sass/about_us.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/show_tailor","css/about_us","css/navbar","css/home","css/app","css/profile","css/register","css/login"], () => (__webpack_require__("./resources/sass/show_tailor.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/show_tailor","css/about_us","css/navbar","css/home","css/app","css/profile","css/register","css/login"], () => (__webpack_require__("./resources/sass/login.scss")))
+/******/ 	__webpack_require__.O(undefined, ["css/show_tailor","css/about_us","css/navbar","css/home","css/app","css/profile","css/register","css/login"], () => (__webpack_require__("./resources/sass/register.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/show_tailor","css/about_us","css/navbar","css/home","css/app","css/profile","css/register","css/login"], () => (__webpack_require__("./resources/sass/profile.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

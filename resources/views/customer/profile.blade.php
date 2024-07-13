@@ -9,94 +9,30 @@ Profile
 @endpush
 
 @section('content')
-@includeIf('layouts.partials.navbar')
-@includeIf('customer.partials.sidebar')
 
-<div class="container">
+<div class="profile_container">
+  <header>
+    <div class="home">
+      <a href="{{ route('home') }}" style="color: black;"><i class="fa-solid fa-house"></i></a>
+    </div>
+  </header>
 
-  <div class="section">
-    <div class="card text-center">
-      <div class="card-header">
-        Profile Details
-      </div>
-      <div class=" card-body">
-        <div>
-          <form action="{{ route('customer.update_profile') }}" method="post" enctype="multipart/form-data">
-            @csrf
-            <div class="profile-picture">
-              <div class=" container mt-5 text-center mb-3">
-                <img src="{{ $user->profile_picture ? asset('/storage/' . $user->profile_picture) : asset('/storage/images/' . 'default.jpg') }}" class="rounded-circle img-fluid" alt="Profile Picture">
+  <div class="profile">
+    <div class="profile-pic">
+      <img src="{{ $user->profile_picture ? asset('/storage/' . $user->profile_picture) : asset('/storage/images/' . 'default.jpg') }}" alt="Profile Picture">
+    </div>
+    <div class="profile-name">{{ $user->name }}</div>
+    <p>{{ $user->email }}</p>
+    <a href="{{ route('customer.show_update_profile') }}"><button class="button">Update</button></a>
 
-                <input type="file" name="profile_picture" accept="image/*">
-              </div>
-
-              @error('profile_picture')
-              {{$message}}
-              @enderror
-            </div>
-            <div class="mb-3">
-              <label for="name" class="form-label">Name:</label>
-              <input type="text" id="name" name="name" value="{{ $user->name }}" required class="form-control @error('name') is-invalid @enderror">
-
-              <span class="text-danger">
-                @error('name')
-                {{$message}}
-                @enderror
-              </span>
-            </div>
-
-            <div class="mb-3">
-              <label for="phone" class="mb-1">Phone:</label><br>
-              <span class="phone-prefix">+880</span>
-              <input type="text" id="phone" name="phone" class="phone-input @error('phone') is-invalid @enderror" placeholder="Enter your Phone Number" maxlength="10" required value="{{$user->phone}}">
-
-              <span class="text-danger">
-                @error('phone')
-                {{$message}}
-                @enderror
-              </span>
-            </div>
-
-            <div class="mb-3">
-              <label for="gender">Gender:</label><br>
-              <select id="gender" name="gender_id" class=" form-select form-select" @error('gender') is-invalid @enderror">
-
-                @foreach($genders as $gender)
-                <option value="{{ $gender->id }}" {{ $gender->id == $user->gender_id ? 'selected' : '' }}>{{ $gender->name }}</option>
-                @endforeach
-              </select>
-
-              <span class="text-danger">
-                @error('gender')
-                {{$message}}
-                @enderror
-              </span>
-            </div>
-
-            <div class="mb-3">
-              <label for="address" class="form-label">Address:</label>
-              <input type="text" id="address" name="address" value="{{ $user->address }}" required class="form-control @error('address') is-invalid @enderror">
-
-              <span class="text-danger">
-                @error('address')
-                {{$message}}
-                @enderror
-              </span>
-            </div>
-
-            <div class="mt-3">
-              <input type="submit" value="Update" class="btn btn-primary">
-            </div>
-          </form>
-        </div>
-      </div>
-      {{-- form --}}
+    <div class="button">
+      <form action="{{ route('logout') }}" method="post">
+        @csrf
+        <button type="submit">Logout</button>
+      </form>
     </div>
 
   </div>
+</div>
 
-  @endsection
-
-  @push('script')
-  <script src="{{ mix('js/profile.js') }}"></script>
-  @endpush
+@endsection

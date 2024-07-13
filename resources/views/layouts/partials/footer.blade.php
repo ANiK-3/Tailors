@@ -1,6 +1,6 @@
  <!-- Footer-->
- <footer class="py-5 bg-dark">
-   <div class="container">
-     <p class="m-0 text-center text-white">Copyright &copy; Tailors 2024</p>
+ <footer>
+   <div>
+     <p>&#9829 <br> Copyright &copy; Tailor 2024</p>
    </div>
  </footer>
