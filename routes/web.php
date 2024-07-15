@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\SendHireNotification;
+use App\Events\SendNotification;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
@@ -9,10 +11,29 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TailorController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Auth\OtpController;
-use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\HireController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Tailor;
+use App\Models\User;
 
+Route::get('/broadcast', function () {
+  broadcast(new SendHireNotification(User::find(3), "Hello World"));
+  return '
+  <!DOCTYPE html>
+  <html>
+  <head>
+<meta name="csrf-token" content="{{ csrf_token() }}">
+  </head>
+  <body>
+  BROADCAST
+  </body>
+  </html>
+  ';
+})->middleware('auth');
+
+Route::get('/db', function () {
+  return view('welcome');
+})->middleware('auth');
 
 Route::get('/', function () {
   $tailors = Tailor::with('user')->get();
@@ -59,9 +80,9 @@ Route::middleware(['role:Customer'])->group(function () {
     Route::get('profile/update', 'showUpdateProfile')->name('customer.show_update_profile');
     Route::post('profile/update', 'UpdateProfile')->name('customer.update_profile');
 
-    Route::get('tailor/{id}/appointment', [AppointmentController::class, 'show'])->name('appointment.show');
-    Route::post('appointment', [AppointmentController::class, 'create'])->name('appointment.create');
-    Route::post('/appointments/{appointment}', [AppointmentController::class, 'updateStatus'])->name('appointment.updateStatus');
+    Route::get('tailor/hire/{id}', [HireController::class, 'send'])->name('hire.send');
+    // Route::post('appointment', [AppointmentController::class, 'create'])->name('appointment.create');
+    // Route::post('/appointments/{appointment}', [AppointmentController::class, 'updateStatus'])->name('appointment.updateStatus');
   });
 });
 
@@ -72,6 +93,8 @@ Route::middleware(['role:Tailor'])->group(function () {
   Route::controller(TailorController::class)->group(function () {
     Route::get('dashboard', 'tailorDashboard')->name('tailor.dashboard');
   });
+
+  Route::get('response_hire/{id}', [HireController::class, 'responseHire'])->name('response_hire');
 });
 
 // Global Routes

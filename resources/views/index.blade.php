@@ -31,4 +31,21 @@ Home
 
 <br>
 @includeIf('layouts.partials.footer')
+
 @endsection
+
+@push('script')
+{{-- <script src="{{mix('js/app.js')}}"></script>
+
+
+@vite('resources/js/app.js')
+<script>
+  setTimeout(() => {
+    window.Echo.private('users.1').listen('SendNotification', (e) => {
+      console.log(e)
+    });
+  }, 200);
+
+</script> --}}
+
+@endpush

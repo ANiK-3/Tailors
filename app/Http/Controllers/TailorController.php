@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\HireAcceptedEvent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\Tailor;
 
 class TailorController extends Controller

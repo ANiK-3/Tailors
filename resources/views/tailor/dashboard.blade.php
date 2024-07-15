@@ -6,3 +6,14 @@
   <h1>HELLO <mark>{{ Auth::user()->name }}</mark></h1>
 </div>
 @endsection
+
+@push('script')
+<script>
+  setTimeout(() => {
+    window.Echo.private('tailors.{{auth()->id()}}').listen('SendHireNotification', (e) => {
+      console.log(e);
+    });
+  }, 200);
+
+</script>
+@endpush

@@ -3,6 +3,23 @@
 @push('style')
 <link rel="stylesheet" href="{{ mix('css/show_tailor.css') }}">
 @endpush
+@push('style')
+<style>
+  .button {
+    margin-top: 10px;
+    height: 30px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: #f08804;
+    border: none;
+    display: block;
+    color: aliceblue;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+</style>
+@endpush
 
 @section('content')
 @includeIf('layouts.partials.navbar')
@@ -15,6 +32,10 @@
     <div class="shopNamePlace">
       <div class="shopName">{{ $tailor->shop_name }}</div>
       <div class="shopPlace">{{ $tailor->user->address }}</div>
+
+      <a href="{{ route('hire.send',$tailor->user_id) }}">
+        <button class="button">Hire</button>
+      </a>
     </div>
   </div>
   <div class="details">
