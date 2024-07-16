@@ -33,9 +33,13 @@
       <div class="shopName">{{ $tailor->shop_name }}</div>
       <div class="shopPlace">{{ $tailor->user->address }}</div>
 
-      <a href="{{ route('hire.send',$tailor->user_id) }}">
-        <button class="button">Hire</button>
-      </a>
+      <form action="{{ route('send_hire_notification') }}" method="post" id="hire-form">
+        @csrf
+        <input type="hidden" name="customer_id" value="{{ Auth::id() }}">
+        <input type="hidden" name="tailor_id" value="{{ $tailor->user_id }}">
+        <input type="submit" value="Hire" class="button" id="send-notification-btn">
+
+      </form>
     </div>
   </div>
   <div class="details">
@@ -66,3 +70,25 @@
 
 @includeIf('layouts.partials.footer')
 @endsection
+
+@push('script')
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('hire-form');
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    const formAction = form.action;
+    const formData = new FormData(form);
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent the form from submitting the traditional way
+      sendHireNotification();
+    });
+
+    async function sendHireNotification() {
+      const response = await http.post(formAction, formData, csrfToken);
+      alert(response.message);
+    }
+  });
+
+</script>
+@endpush

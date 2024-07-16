@@ -10,23 +10,19 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\User;
+use App\Models\Request as TailorRequest;
 
-class SendHireNotification implements ShouldBroadcastNow
+class RequestAcceptedEvent implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
      * Create a new event instance.
      */
-
-    public $tailor_id;
-    public $message;
-
-    public function __construct($tailor_id, $message)
+    public $request;
+    public function __construct(TailorRequest $request)
     {
-        $this->tailor_id = $tailor_id;
-        $this->message = $message;
+        $this->request = $request;
     }
 
     /**
@@ -37,14 +33,15 @@ class SendHireNotification implements ShouldBroadcastNow
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('tailors.' . $this->tailor_id),
+            new PrivateChannel('customers.' . $this->request->customer_id),
         ];
     }
 
     public function broadcastWith(): array
     {
         return [
-            'message' => $this->message,
+            'message' => 'Your request has been accepted by the tailor.',
+            'request_id' => $this->request->id,
         ];
     }
 }

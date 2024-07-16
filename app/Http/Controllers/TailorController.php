@@ -17,7 +17,7 @@ class TailorController extends Controller
 
     public function show($id)
     {
-        $tailor = Tailor::with('user')->findOrFail($id);
+        $tailor = Tailor::with('user')->find($id);
         return view('tailor.show', compact('tailor'));
     }
 }

@@ -27,6 +27,12 @@
        </div>
      </div>
 
+     <div id="notification-container">
+       <i class="fa fa-bell"></i>
+       <span id="notification-counter">0</span>
+       <ul id="notification-list"></ul>
+     </div>
+
      <div class="home border"><a href="{{ route('home') }}">Home</a></div>
      <div class="home border"><a href="{{ route('about_us') }}">About Us</a></div>
      @auth

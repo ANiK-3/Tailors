@@ -48,4 +48,18 @@ Home
 
 </script> --}}
 
+<script>
+  // Listen for request acceptance or decline notification sent to customer
+  window.Echo.private(`customers.{{Auth::id()}}`)
+    .listen('RequestAcceptedEvent', (e) => {
+      alert(e.message);
+      window.location.href = `/fabric-details-form/${e.request_id}`;
+    })
+    .listen('RequestDeclinedEvent', (e) => {
+      alert(e.message);
+      // Implement further logic for declined request
+    });
+
+</script>
+
 @endpush
