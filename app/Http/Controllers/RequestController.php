@@ -33,7 +33,8 @@ class RequestController extends Controller
     public function showRequest($id)
     {
         $request = TailorRequest::findOrFail($id);
-        return view('tailor_request', compact('request'));
+        $customer = $request->customer;
+        return view('tailor.tailor_request', compact('request', 'customer'));
     }
 
     public function acceptRequest($requestId)
@@ -48,7 +49,9 @@ class RequestController extends Controller
 
         event(new RequestAcceptedEvent($request));
 
-        return redirect()->route('fabric.details.form', ['requestId' => $requestId]);
+        return redirect()->route('tailor.dashboard');
+
+        // return redirect()->route('fabric_details', ['requestId' => $requestId]);
     }
 
     public function declineRequest($requestId, $message = "Request has been declined successfully.")

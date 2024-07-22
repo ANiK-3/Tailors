@@ -33,13 +33,15 @@
       <div class="shopName">{{ $tailor->shop_name }}</div>
       <div class="shopPlace">{{ $tailor->user->address }}</div>
 
+      @can('customer')
       <form action="{{ route('send_hire_notification') }}" method="post" id="hire-form">
         @csrf
         <input type="hidden" name="customer_id" value="{{ Auth::id() }}">
         <input type="hidden" name="tailor_id" value="{{ $tailor->user_id }}">
         <input type="submit" value="Hire" class="button" id="send-notification-btn">
-
       </form>
+      @endcan
+
     </div>
   </div>
   <div class="details">
@@ -86,6 +88,7 @@
 
     async function sendHireNotification() {
       const response = await http.post(formAction, formData, csrfToken);
+
       alert(response.message);
     }
   });

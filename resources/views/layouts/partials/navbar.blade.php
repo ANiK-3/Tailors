@@ -17,7 +17,7 @@
        </div>
      </div>
 
-     <div class="nav-search">
+     {{-- <div class="nav-search">
        <select name="" class="search-select">
          <option value="">All</option>
        </select>
@@ -25,7 +25,7 @@
        <div class="search-icon">
          <i class="fa-solid fa-magnifying-glass"></i>
        </div>
-     </div>
+     </div> --}}
 
      <div id="notification-container">
        <i class="fa fa-bell"></i>

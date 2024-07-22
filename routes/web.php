@@ -11,12 +11,20 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TailorController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Auth\OtpController;
-use App\Http\Controllers\HireController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Tailor;
 use App\Models\User;
 
+
+// NOTIFICATIONS
+Route::middleware('auth')->group(function () {
+  Route::get('/notifications', [NotificationController::class, 'index']);
+  Route::post('/notifications/store', [NotificationController::class, 'store']);
+  Route::post('/notifications/{id}/markAsRead', [NotificationController::class, 'markAsRead']);
+});
+//
 
 // routes/web.php
 // Route::post('send-hire-notification', [RequestController::class, 'sendHireNotification'])->name('send_hire_notification')->middleware('check.hire.timing', 'role:Customer');
@@ -24,30 +32,11 @@ Route::post('send-hire-notification', [RequestController::class, 'sendHireNotifi
 Route::get('/manage-request/{id}', [RequestController::class, 'showRequest'])->name('request.show')->middleware('role:Tailor');
 Route::post('/accept-request/{id}', [RequestController::class, 'acceptRequest'])->name('request.accept')->middleware('role:Tailor');
 Route::post('/decline-request/{id}', [RequestController::class, 'declineRequest'])->name('request.decline')->middleware('role:Tailor');
-// Route::get('/fabric-details-form/{requestId}', function ($requestId) {
-//   return view('fabric_details', compact('requestId'));
-// })->name('fabric.details.form');
+Route::get('/fabric-details/{requestId}', function ($requestId) {
+  return view('request.fabric_details', compact('requestId'));
+})->name('fabric_details')->middleware('role:Customer');
 // Route::post('/fabric-details', [FabricController::class, 'store']);
 
-
-Route::get('/broadcast', function () {
-  broadcast(new SendHireNotification(User::find(3), "Hello World"));
-  return '
-  <!DOCTYPE html>
-  <html>
-  <head>
-<meta name="csrf-token" content="{{ csrf_token() }}">
-  </head>
-  <body>
-  BROADCAST
-  </body>
-  </html>
-  ';
-})->middleware('auth');
-
-Route::get('/db', function () {
-  return view('welcome');
-})->middleware('auth');
 
 Route::get('/', function () {
   $tailors = Tailor::with('user')->get();
@@ -92,7 +81,11 @@ Route::middleware(['role:Customer'])->group(function () {
     Route::get('home', 'customerDashboard')->name('customer.dashboard');
     Route::get('profile', 'profile')->name('customer.profile');
     Route::get('profile/update', 'showUpdateProfile')->name('customer.show_update_profile');
-    Route::post('profile/update', 'UpdateProfile')->name('customer.update_profile');
+    Route::post('profile/update', 'updateProfile')->name('customer.update_profile');
+    Route::get('profile/password', 'showUpdatePassword')->name('password.show_update');
+    Route::post('profile/password/validate-current', 'validateCurrentPassword')->name('password.validateCurrent');
+    Route::post('profile/password/update', 'updatePassword')->name('password.update');
+
 
     // Route::get('tailor/hire/{id}', [HireController::class, 'send'])->name('hire.send');
     // Route::post('appointment', [AppointmentController::class, 'create'])->name('appointment.create');

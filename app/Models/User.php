@@ -43,18 +43,40 @@ class User extends Authenticatable
         return $this->hasMany(Measurement::class);
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
     public function orders()
     {
         return $this->hasMany(Order::class);
     }
 
-    public function appointments()
+    public function requests()
     {
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(Request::class);
     }
 
+    // Accessors & Mutators
+    public function getNameAttribute($value)
+    {
+        return ucwords($value);
+    }
+    public function setNameAttribute($value)
+    {
+        return $this->attributes['name'] = strtolower($value);
+    }
     public function setPasswordAttribute($value)
     {
         return $this->attributes['password'] = bcrypt($value);
+    }
+    public function getAddressAttribute($value)
+    {
+        return ucwords($value);
+    }
+    public function setAddressAttribute($value)
+    {
+        return $this->attributes['name'] = strtolower($value);
     }
 }
