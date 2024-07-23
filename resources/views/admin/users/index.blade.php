@@ -55,7 +55,7 @@ Users
         <form action="{{ route('user.destroy', $user->id) }}" method="POST" id="delete-form">
           @csrf
           @method('DELETE')
-          <input type="submit" value="Delete" class="button">
+          <button type="submit">Delete</button>
         </form>
       </td>
     </tr>
@@ -66,26 +66,37 @@ Users
 {{-- {{$users->link()}} --}}
 @endsection
 
-{{-- @push('script')
+@push('script')
 <script>
-  const deleteForm = document.querySelector("delete-form");
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.getElementById("delete-form");
 
-  deleteForm.addEventListener("click", async function(e) {
+    const csrfToken = document
+      .querySelector('meta[name="csrf-token"]')
+      .getAttribute("content");
+    const formAction = form.action;
 
-    e.preventDefault();
-    const response = await fetch(deleteForm.action, {
-      method: DELETE
-      , headers: {
-        'XSRF-TOKEN': "{{csrf_token()}}"
-}
-});
+    form.addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the form from submitting the traditional way
+      console.log(formAction);
+      deleteAccount();
+    });
 
-const data = await response.json();
-if (!data) {
-alert(data.error);
-}
-alert(data.status);
-});
+    async function deleteAccount() {
+      const response = await fetch(deleteForm.action, {
+        method: DELETE
+        , headers: {
+          "XSRF-TOKEN": csrfToken
+        , }
+      , });
+
+      const data = await response.json();
+      if (!data) {
+        alert(data.error);
+      }
+      alert(data.status);
+    }
+  });
 
 </script>
-@endpush --}}
+@endpush

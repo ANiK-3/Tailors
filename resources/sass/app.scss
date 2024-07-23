@@ -2,6 +2,10 @@
 // @import "~bootstrap/scss/bootstrap";
 @import "navbar";
 
+body {
+    background: rgb(71, 69, 69);
+}
+
 .is-invalid {
     border: 1px solid #dc3545;
     color: #dc3545;

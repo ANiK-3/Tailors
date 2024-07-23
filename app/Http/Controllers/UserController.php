@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         $users = User::withWhereHas('roles', function ($query) {
             $query->where('role', '!=', 'Admin');
-        })->paginate(20);
+        })->paginate(5);
 
         return view('admin.users.index', compact('users'));
     }
