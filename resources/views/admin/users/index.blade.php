@@ -28,6 +28,16 @@ Users
 @endpush
 
 @section('content')
+<div class="nav-search">
+  <select name="" class="search-select">
+    <option value="">All</option>
+  </select>
+  <input type="text" placeholder="Search" class="search-input">
+  <div class="search-icon">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </div>
+</div>
+
 <div>
   <a href="{{ route('user.create') }}"><button class="button">Create User</button></a>
 </div>
@@ -69,33 +79,71 @@ Users
 @push('script')
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById("delete-form");
+    let searchInput = document.querySelector(".search-input");
+    searchInput.addEventListener("keyup", async (e) => {
+      // console.log(e.data);
+      console.log(e.target.value);
 
-    const csrfToken = document
-      .querySelector('meta[name="csrf-token"]')
-      .getAttribute("content");
-    const formAction = form.action;
+      let table = document.querySelector("table");
+      // console.log(table.children[1].children[1].innerHTML);
 
-    form.addEventListener("submit", function(event) {
-      event.preventDefault(); // Prevent the form from submitting the traditional way
-      console.log(formAction);
-      deleteAccount();
+      // Get input text
+      const userText = e.target.value;
+      if (userText !== '') {
+        const users = await getUser(userText);
+        addElement(users);
+        // return table.children[1].innerHTML += users;
+      }
     });
 
-    async function deleteAccount() {
-      const response = await fetch(deleteForm.action, {
-        method: DELETE
-        , headers: {
-          "XSRF-TOKEN": csrfToken
-        , }
-      , });
+    function addElement(users) {
+      console.log(users);
+      // users.forEach(element => {
+      //   console.log(element);
+      // });
+      // for (i = 0; i < users.length; i++) {
+      //   console.log(users[i]);
+      // }
+    }
 
+    async function getUser(user) {
+      const response = await fetch(`/user/name/${user}`);
       const data = await response.json();
       if (!data) {
-        alert(data.error);
+        return data.message;
+      } else {
+        return data;
       }
-      alert(data.status);
     }
+
+    // Not working
+    //   const form = document.getElementById("delete-form");
+
+    //   const csrfToken = document
+    //     .querySelector('meta[name="csrf-token"]')
+    //     .getAttribute("content");
+    //   const formAction = form.action;
+
+    //   form.addEventListener("submit", function(event) {
+    //     event.preventDefault(); // Prevent the form from submitting the traditional way
+    //     console.log(formAction);
+    //     deleteAccount();
+    //   });
+
+    //   async function deleteAccount() {
+    //     const response = await fetch(deleteForm.action, {
+    //       method: DELETE
+    //       , headers: {
+    //         "XSRF-TOKEN": csrfToken
+    //       , }
+    //     , });
+
+    //     const data = await response.json();
+    //     if (!data) {
+    //       alert(data.error);
+    //     }
+    //     alert(data.status);
+    //   }
   });
 
 </script>

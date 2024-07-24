@@ -14,9 +14,11 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('shop_image')->nullable();
-            $table->string('shop_name');
-            $table->text('bio');
-            $table->string('specialty');
+            $table->string('shop_name')->nullable();
+            $table->text('bio')->nullable();
+            $table->string('specialty')->nullable();
+            $table->float('experience')->nullable();
+            $table->boolean('accepted_by_admin')->default(0);
             $table->timestamps();
         });
     }

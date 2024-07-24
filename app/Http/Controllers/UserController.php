@@ -153,6 +153,23 @@ class UserController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('home')->with('success', 'Logout Successful');
     }
+
+    public function getUser($name)
+    {
+        // TODO:
+        //! FIX Raw query
+        $user = User::whereRaw("name LIKE '{$name}%' LIMIT 100")->get();
+
+        if (empty($user)) {
+            return response()->json([
+                "message" => "Not Found",
+            ]);
+        } else {
+            return response()->json([
+                "users" => $user,
+            ]);
+        }
+    }
     public function defaultDashboard()
     {
         return view('default');

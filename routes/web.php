@@ -13,9 +13,14 @@ use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Tailor;
 
+Route::get('/user/name/{name}', [UserController::class, 'getUser'])->name('user.get')->middleware('auth');
+Route::get('/admin/manage-shop', [AdminController::class, 'manageShop'])->name('admin.manage_shop');
+Route::get('/admin/manage-request', [AdminController::class, 'manageRequest'])->name('admin.show_manage_request');
+Route::get('/admin/create-shop', [AdminController::class, 'showCreateShop'])->name('admin.show_create_shop');
+Route::post('/admin/create-shop', [AdminController::class, 'createShop'])->name('admin.create_shop');
 
 Route::get('/', function () {
-  $tailors = Tailor::with('user')->get();
+  $tailors = Tailor::where('accepted_by_admin', 1)->get();
   return view('index', compact('tailors'));
 })->name('home');
 
@@ -65,7 +70,10 @@ Route::middleware(['role:Customer'])->group(function () {
   });
 });
 
-Route::get('tailor/{id}', [TailorController::class, 'show'])->name('tailor.show');
+Route::get('tailor/{id}', [TailorController::class, 'show'])->name('tailor.show')->middleware('auth');
+Route::get('tailor/show/{id}', [AdminController::class, 'showTailor'])->name('tailor.show_info')->middleware('auth');
+Route::post('admin/accept-tailor-request/{id}', [AdminController::class, 'acceptRequest'])->name('admin.accept_tailor_request')->middleware('auth');
+Route::post('admin/decline-tailor-request{id}', [AdminController::class, 'declineRequest'])->name('admin.decline_tailor_request')->middleware('auth');
 
 //  Tailor Routes
 Route::middleware(['role:Tailor'])->group(function () {
