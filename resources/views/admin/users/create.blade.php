@@ -11,7 +11,7 @@ Create User
 @section('content')
 <div class="container">
   <h2 class="mt-4 text-center">Create User</h2>
-  <form method="POST" action="{{ route('user.store') }}">
+  <form method="POST" action="{{ route('users.store') }}">
     @csrf
 
     <div class="mb-3">

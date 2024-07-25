@@ -18,7 +18,7 @@ class UserController extends Controller
     {
         $users = User::withWhereHas('roles', function ($query) {
             $query->where('role', '!=', 'Admin');
-        })->paginate(5);
+        })->paginate(10);
 
         return view('admin.users.index', compact('users'));
     }
@@ -154,19 +154,24 @@ class UserController extends Controller
         return redirect()->route('home')->with('success', 'Logout Successful');
     }
 
-    public function getUser($name)
+    public function getUser(Request $req)
     {
-        // TODO:
-        //! FIX Raw query
-        $user = User::whereRaw("name LIKE '{$name}%' LIMIT 100")->get();
+        $name = $req->query('name', '');
+        $users = User::withWhereHas('roles', function ($query) {
+            $query->where('role', '!=', 'Admin');
+        })->where('name', 'like', "{$name}%")->orderBy('name')
+            // ->get();
+            ->paginate(10);
 
-        if (empty($user)) {
+
+        if ($users->isEmpty()) {
             return response()->json([
-                "message" => "Not Found",
-            ]);
+                "message" => "User Not Found",
+            ], 404);
         } else {
             return response()->json([
-                "users" => $user,
+                "users" => $users,
+                "pagination" => $users->links()->render()
             ]);
         }
     }

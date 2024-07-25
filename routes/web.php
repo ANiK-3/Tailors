@@ -13,7 +13,8 @@ use App\Http\Controllers\AppointmentController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Tailor;
 
-Route::get('/user/name/{name}', [UserController::class, 'getUser'])->name('user.get')->middleware('auth');
+Route::get('/users/user', [UserController::class, 'getUser'])->name('user.get')->middleware('auth');
+
 Route::get('/admin/manage-shop', [AdminController::class, 'manageShop'])->name('admin.manage_shop');
 Route::get('/admin/manage-request', [AdminController::class, 'manageRequest'])->name('admin.show_manage_request');
 Route::get('/admin/create-shop', [AdminController::class, 'showCreateShop'])->name('admin.show_create_shop');
@@ -51,7 +52,7 @@ Route::post('logout', [UserController::class, 'logout'])->name('logout');
 
 // Admin Routes
 Route::middleware(['role:Admin'])->group(function () {
-  Route::resource('user', UserController::class);
+  Route::resource('users', UserController::class);
   Route::resource('role', RoleController::class);
   Route::resource('admin', AdminController::class);
 });

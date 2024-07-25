@@ -24,127 +24,171 @@ Users
     cursor: pointer;
   }
 
+  /* Pagination */
+  nav .w-5 {
+    display: none;
+  }
+
+  .paginator {
+    width: 50%;
+  }
+
+  .container {
+    display: grid;
+    place-items: center;
+    padding: 10px;
+    gap: 20px;
+  }
+
 </style>
 @endpush
 
 @section('content')
-<div class="nav-search">
-  <select name="" class="search-select">
-    <option value="">All</option>
-  </select>
-  <input type="text" placeholder="Search" class="search-input">
-  <div class="search-icon">
-    <i class="fa-solid fa-magnifying-glass"></i>
+<div class="container">
+  <div class="nav-search">
+    <select name="" class="search-select">
+      <option value="">All</option>
+    </select>
+    <input type="text" placeholder="Search" class="search-input">
+    <div class="search-icon">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </div>
+  </div>
+
+  <div>
+    <a href="{{ route('users.create') }}"><button>Create User</button></a>
+  </div>
+
+  <div id="message"></div>
+
+  <div id="userTableContainer">
+    <table>
+      <thead>
+        <tr>
+          <th>SI</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th colspan="2">Action</th>
+        </tr>
+      </thead>
+      <tbody id="userTable">
+        {{-- dynamic content --}}
+      </tbody>
+    </table>
+
+    <div id="pagination"></div>
   </div>
 </div>
-
-<div>
-  <a href="{{ route('user.create') }}"><button class="button">Create User</button></a>
-</div>
-
-<table>
-  <thead>
-    <tr>
-      <th>SI</th>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Phone</th>
-      <th colspan="2">Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    @foreach ($users as $key => $user)
-    <tr>
-      <td>{{$key}}</td>
-      <td>{{$user->name}}</td>
-      <td>{{$user->email}}</td>
-      <td>{{$user->phone}}</td>
-      <td><a href="{{ route('user.show',$user->id) }}"><button class="button">View</button></a></td>
-      <td><a href="{{ route('user.edit',$user->id) }}"><button class="button">Update</button></a></td>
-      <td>
-        <form action="{{ route('user.destroy', $user->id) }}" method="POST" id="delete-form">
-          @csrf
-          @method('DELETE')
-          <button type="submit">Delete</button>
-        </form>
-      </td>
-    </tr>
-    @endforeach
-  </tbody>
-</table>
-{{-- for pagination --}}
-{{-- {{$users->link()}} --}}
 @endsection
 
 @push('script')
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    let searchInput = document.querySelector(".search-input");
-    searchInput.addEventListener("keyup", async (e) => {
-      // console.log(e.data);
-      console.log(e.target.value);
-
-      let table = document.querySelector("table");
-      // console.log(table.children[1].children[1].innerHTML);
-
-      // Get input text
-      const userText = e.target.value;
-      if (userText !== '') {
-        const users = await getUser(userText);
-        addElement(users);
-        // return table.children[1].innerHTML += users;
-      }
-    });
-
-    function addElement(users) {
-      console.log(users);
-      // users.forEach(element => {
-      //   console.log(element);
-      // });
-      // for (i = 0; i < users.length; i++) {
-      //   console.log(users[i]);
-      // }
-    }
-
-    async function getUser(user) {
-      const response = await fetch(`/user/name/${user}`);
-      const data = await response.json();
-      if (!data) {
-        return data.message;
-      } else {
-        return data;
-      }
-    }
-
-    // Not working
-    //   const form = document.getElementById("delete-form");
-
-    //   const csrfToken = document
-    //     .querySelector('meta[name="csrf-token"]')
-    //     .getAttribute("content");
-    //   const formAction = form.action;
-
-    //   form.addEventListener("submit", function(event) {
-    //     event.preventDefault(); // Prevent the form from submitting the traditional way
-    //     console.log(formAction);
-    //     deleteAccount();
-    //   });
-
-    //   async function deleteAccount() {
-    //     const response = await fetch(deleteForm.action, {
-    //       method: DELETE
-    //       , headers: {
-    //         "XSRF-TOKEN": csrfToken
-    //       , }
-    //     , });
-
-    //     const data = await response.json();
-    //     if (!data) {
-    //       alert(data.error);
-    //     }
-    //     alert(data.status);
-    //   }
+  document.addEventListener('DOMContentLoaded', async () => {
+    await fetchUsers();
   });
+
+  const searchInput = document.querySelector(".search-input");
+  searchInput.addEventListener("keyup", async (e) => {
+    const userText = e.target.value;
+    await fetchUsers(userText);
+  });
+
+  async function fetchUsers(name = '', page = 1) {
+
+    const messageElement = document.getElementById('message');
+    const userTable = document.getElementById('userTable');
+    const userTableHead = userTable.previousElementSibling;
+    const paginationElement = document.getElementById('pagination');
+
+    // Clear previous results
+    messageElement.textContent = '';
+    userTable.innerHTML = '';
+    paginationElement.innerHTML = '';
+    userTableHead.style.display = 'none';
+
+    try {
+      const response = await fetch(`/users/user?name=${name}&page=${page}`);
+      const data = await response.json();
+
+      if (!data.users || data.users.length === 0) {
+        messageElement.textContent = data.message;
+        return;
+      }
+
+      data.users.data.forEach((user, index) => {
+        userTable.innerHTML += `
+         <tr>
+          <td>${data.users.from + index}</td>
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td>${user.phone}</td>
+          <td><a href="/users/${user.id}"><button class="button">View</button></a></td>
+          <td><a href="/users/${user.id}/edit"><button class="button">Update</button></a></td>
+          <td>
+            <form action="/users/${user.id}" method="POST" id="delete-form">
+              <input type="hidden" name="_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="_method" value="DELETE">
+              <button type="submit" class="button">Delete</button>
+            </form>
+          </td>
+          </tr>
+          `;
+      });
+      userTableHead.style.display = '';
+
+      paginationElement.innerHTML = `${data.pagination}`;
+
+      paginationElement.querySelectorAll('a').forEach(link => {
+        if (link.textContent == data.current_page) {
+          link.parentElement.classList.add('active');
+        } else {
+          link.parentElement.classList.remove('active');
+        }
+
+        link.addEventListener('click', (event) => {
+          event.preventDefault();
+          const url = new URL(link.href);
+          const page = url.searchParams.get('page');
+          fetchUsers(name, page);
+        });
+      });
+
+    } catch (error) {
+      messageElement.textContent = 'Error fetching users. Please try again later.';
+    }
+  }
+
+
+
+  // Not working
+  //   const form = document.getElementById("delete-form");
+
+  //   const csrfToken = document
+  //     .querySelector('meta[name="csrf-token"]')
+  //     .getAttribute("content");
+  //   const formAction = form.action;
+
+  //   form.addEventListener("submit", function(event) {
+  //     event.preventDefault(); // Prevent the form from submitting the traditional way
+  //     console.log(formAction);
+  //     deleteAccount();
+  //   });
+
+  //   async function deleteAccount() {
+  //     const response = await fetch(deleteForm.action, {
+  //       method: DELETE
+  //       , headers: {
+  //         "XSRF-TOKEN": csrfToken
+  //       , }
+  //     , });
+
+  //     const data = await response.json();
+  //     if (!data) {
+  //       alert(data.error);
+  //     }
+  //     alert(data.status);
+  //   }
 
 </script>
 @endpush
