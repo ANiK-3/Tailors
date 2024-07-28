@@ -33,6 +33,10 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('tailor', function (User $user) {
             return $user->roles()->pluck('role')->contains('Tailor');
         });
+        Gate::define('isVerified', function (User $user) {
+            return !is_null($user->email_verified_at);
+        });
+
         Gate::define('view_profile', function (User $user, $user_id) {
             return $user->id === $user_id;
         });

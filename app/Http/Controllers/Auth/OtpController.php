@@ -105,6 +105,9 @@ class OtpController extends Controller
 
     public function verification()
     {
+        if (Gate::allows('isVerified')) {
+            return redirect()->route('home')->with('success', 'Your email is already verified.');
+        }
         return view('auth.otp_verification');
     }
 

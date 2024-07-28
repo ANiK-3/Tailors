@@ -16,11 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::withWhereHas('roles', function ($query) {
-            $query->where('role', '!=', 'Admin');
-        })->paginate(10);
-
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index');
     }
 
     /**
@@ -58,6 +54,7 @@ class UserController extends Controller
             'phone' => $credentials['phone'],
             'gender_id' => $credentials['gender'],
             'address' => $credentials['address'],
+            'email_verified_at' => now(),
         ]);
         if (!$user) {
             redirect()->back()->with('error', 'Unable to create an account.');
@@ -72,7 +69,7 @@ class UserController extends Controller
             ]);
         }
 
-        redirect()->route('user.create')->with('success', 'Successfully created an account');
+        redirect()->route('users.create')->with('success', 'Successfully created an account');
     }
 
     /**
@@ -157,12 +154,26 @@ class UserController extends Controller
     public function getUser(Request $req)
     {
         $name = $req->query('name', '');
-        $users = User::withWhereHas('roles', function ($query) {
-            $query->where('role', '!=', 'Admin');
-        })->where('name', 'like', "{$name}%")->orderBy('name')
-            // ->get();
-            ->paginate(10);
+        $role = $req->query('role', '');
 
+        $query = User::query();
+
+        if ($name) {
+            $query->where('name', 'like', "{$name}%");
+        }
+
+        // Filter users by role, excluding 'Admin'
+        if ($role) {
+            $query->whereHas('roles', function ($q) use ($role) {
+                $q->where('role', '!=', 'Admin')->where('role', ucfirst($role));
+            });
+        } else {
+            $query->whereDoesntHave('roles', function ($query) {
+                $query->where('role', 'Admin');
+            })->orderBy('name');
+        }
+
+        $users = $query->paginate(10);
 
         if ($users->isEmpty()) {
             return response()->json([

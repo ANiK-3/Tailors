@@ -22,6 +22,12 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt($credentials, $req->has('remember'))) {
+            // check if user's email is verified
+            if (Gate::denies('isVerified')) {
+                $generateOtp = new OtpController();
+                $generateOtp->generateForEmail($credentials);
+                return redirect()->route('otp.verification')->with('success', 'OTP has been sent to your Email, please verify your email address.');
+            }
             // Check the user's role and redirect accordingly
             if (Gate::allows('admin') && Gate::any(['customer', 'tailor'])) {
                 return redirect()->route('default.dashboard')->with('success', 'Login Successful');
@@ -31,7 +37,7 @@ class LoginController extends Controller
                 return redirect()->route('customer.dashboard')->with('success', 'Login Successful');
             } elseif (Gate::allows('tailor')) {
                 return redirect()->route('tailor.dashboard')->with('success', 'Login Successful');
-            } else {
+            } elseif (Gate::none(['admin', 'customer', 'tailor'])) {
                 // auth user but with no roles
                 session()->flush();
                 return redirect()->route('login')->with('error', 'You can not access this email address.');

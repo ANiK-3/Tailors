@@ -34,6 +34,7 @@ Route::controller(OtpController::class)->group(function () {
   Route::get('otp/login', 'index')->name('otp.login');
   Route::post('otp/generate', 'generate')->name('otp.generate');
   Route::get('otp/verification', 'verification')->name('otp.verification');
+  // Route::get('otp/email_verification','emailVerification')
   Route::post('otp/login', 'loginWithOtp')->name('otp.getLogin');
   Route::post('otp/resend', 'resendOtp')->name('otp.resend');
 });

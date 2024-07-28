@@ -44,10 +44,13 @@ Users
 @endpush
 
 @section('content')
+
 <div class="container">
   <div class="nav-search">
     <select name="" class="search-select">
       <option value="">All</option>
+      <option value="customer">Customer</option>
+      <option value="tailor">Tailor</option>
     </select>
     <input type="text" placeholder="Search" class="search-input">
     <div class="search-icon">
@@ -56,6 +59,7 @@ Users
   </div>
 
   <div>
+    <a href="{{ route('admin.index') }}"><button>Back</button></a>
     <a href="{{ route('users.create') }}"><button>Create User</button></a>
   </div>
 
@@ -85,39 +89,83 @@ Users
 @push('script')
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
-    await fetchUsers();
-  });
+    const searchInput = document.querySelector(".search-input");
+    const searchSelect = document.querySelector('.search-select');
+    const searchIcon = document.querySelector('.search-icon i');
 
-  const searchInput = document.querySelector(".search-input");
-  searchInput.addEventListener("keyup", async (e) => {
-    const userText = e.target.value;
-    await fetchUsers(userText);
-  });
+    const getQueryParameter = (param) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    };
 
-  async function fetchUsers(name = '', page = 1) {
-
-    const messageElement = document.getElementById('message');
-    const userTable = document.getElementById('userTable');
-    const userTableHead = userTable.previousElementSibling;
-    const paginationElement = document.getElementById('pagination');
-
-    // Clear previous results
-    messageElement.textContent = '';
-    userTable.innerHTML = '';
-    paginationElement.innerHTML = '';
-    userTableHead.style.display = 'none';
-
-    try {
-      const response = await fetch(`/users/user?name=${name}&page=${page}`);
-      const data = await response.json();
-
-      if (!data.users || data.users.length === 0) {
-        messageElement.textContent = data.message;
-        return;
+    const updateURL = (name, role, page) => {
+      const url = new URL(window.location.href);
+      if (name) {
+        url.searchParams.set('name', name);
+      } else {
+        url.searchParams.delete('name');
       }
+      if (role) {
+        url.searchParams.set('role', role);
+      } else {
+        url.searchParams.delete('role');
+      }
+      if (page) {
+        url.searchParams.set('page', page);
+      } else {
+        url.searchParams.delete('page');
+      }
+      window.history.pushState({}, '', url);
+    };
 
-      data.users.data.forEach((user, index) => {
-        userTable.innerHTML += `
+    searchInput.addEventListener("keyup", async (e) => {
+      const name = e.target.value;
+      const role = searchSelect.value;
+
+      updateURL(name, role, 1);
+      await fetchUsers(name, role);
+    });
+
+    searchSelect.addEventListener("change", async (e) => {
+      const role = e.target.value;
+      const name = searchInput.value;
+
+      updateURL(name, role, 1);
+      await fetchUsers(name, role);
+    });
+
+    searchIcon.addEventListener("click", async () => {
+      const name = searchInput.value;
+      const role = searchSelect.value;
+
+      updateURL(name, role, 1);
+      await fetchUsers(name, role);
+    });
+
+    async function fetchUsers(name = '', role = '', page = 1) {
+      const messageElement = document.getElementById('message');
+      const userTable = document.getElementById('userTable');
+      const userTableHead = userTable.previousElementSibling;
+      const paginationElement = document.getElementById('pagination');
+
+      // Clear previous results
+      messageElement.textContent = '';
+      userTable.innerHTML = '';
+      paginationElement.innerHTML = '';
+      userTableHead.style.display = 'none';
+
+      try {
+        const response = await fetch(`/users/user?name=${name}&role=${role}&page=${page}`);
+
+        const data = await response.json();
+
+        if (!data.users || data.users.length === 0) {
+          messageElement.textContent = data.message;
+          return;
+        }
+
+        data.users.data.forEach((user, index) => {
+          userTable.innerHTML += `
          <tr>
           <td>${data.users.from + index}</td>
           <td>${user.name}</td>
@@ -134,30 +182,42 @@ Users
           </td>
           </tr>
           `;
-      });
-      userTableHead.style.display = '';
-
-      paginationElement.innerHTML = `${data.pagination}`;
-
-      paginationElement.querySelectorAll('a').forEach(link => {
-        if (link.textContent == data.current_page) {
-          link.parentElement.classList.add('active');
-        } else {
-          link.parentElement.classList.remove('active');
-        }
-
-        link.addEventListener('click', (event) => {
-          event.preventDefault();
-          const url = new URL(link.href);
-          const page = url.searchParams.get('page');
-          fetchUsers(name, page);
         });
-      });
+        userTableHead.style.display = '';
 
-    } catch (error) {
-      messageElement.textContent = 'Error fetching users. Please try again later.';
+        paginationElement.innerHTML = `${data.pagination}`;
+
+        paginationElement.querySelectorAll('a').forEach(link => {
+          if (link.textContent == data.current_page) {
+            link.parentElement.classList.add('active');
+          } else {
+            link.parentElement.classList.remove('active');
+          }
+
+          link.addEventListener('click', (event) => {
+            event.preventDefault();
+            const url = new URL(link.href);
+            const page = url.searchParams.get('page');
+
+            updateURL(name, role, page);
+            fetchUsers(name, role, page);
+          });
+        });
+
+      } catch (error) {
+        messageElement.textContent = 'Error fetching users. Please try again later.';
+      }
     }
-  }
+
+    // Initial Fetch with Query Parameters
+    const initialName = getQueryParameter('name') || '';
+    const initialRole = getQueryParameter('role') || '';
+    const initialPage = getQueryParameter('page') || 1;
+
+    searchInput.value = initialName;
+    searchSelect.value = initialRole;
+    await fetchUsers(initialName, initialRole, initialPage);
+  });
 
 
 
