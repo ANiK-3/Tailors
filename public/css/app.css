@@ -40,7 +40,11 @@
 }
 
 .border:hover {
-  border: 2px solid white;
+  border-bottom: 2px solid #f08804;
+}
+
+.navbar a.active {
+  border-bottom: 3px solid red;
 }
 
 /**box2*/
