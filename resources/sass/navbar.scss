@@ -16,6 +16,7 @@
     align-items: center;
     color: aliceblue;
     justify-content: space-evenly;
+    z-index: 1;
 
     a {
         text-decoration: none;
@@ -97,10 +98,10 @@
     border-bottom-right-radius: 4px;
 }
 
-footer {
-    background-color: black;
-    color: aliceblue;
-    text-align: center;
-    width: 100vw;
-    bottom: 0px;
-}
+// footer {
+//     background-color: black;
+//     color: aliceblue;
+//     text-align: center;
+//     width: 100vw;
+//     bottom: 0px;
+// }

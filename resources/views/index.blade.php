@@ -23,8 +23,8 @@ Home
       <div class="pic">
         <img src="{{ $tailor->shop_image ? asset('/storage/' . $tailor->shop_image) : asset('/storage/images/' . 'default_tailor.jpg') }}" alt="Shop Image">
       </div>
-      <p name="shopName" style="color: aliceblue;">{{ $tailor->shop_name }}</p>
-      <p name="aboutShop" style="color: aliceblue; font-size:20px;">{{ $tailor->bio }}</p>
+      <div  class="shopName"name="shopName" >{{ $tailor->shop_name }}</div>
+      <p name="aboutShop" style="color: aliceblue;">{{ $tailor->bio }}</p>
     </div>
     </div>
   </a>
