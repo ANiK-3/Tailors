@@ -13,7 +13,7 @@ class StatusSeeder extends Seeder
      */
     public function run(): void
     {
-        $statuses = ['pending', 'in progress', 'completed', 'cancelled'];
+        $statuses = ['accepted', 'declined', 'pending', 'in progress', 'completed', 'cancelled'];
 
         foreach ($statuses as $status) {
             Status::create(['name' => $status]);

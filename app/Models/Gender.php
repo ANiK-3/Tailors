@@ -15,4 +15,10 @@ class Gender extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    // Accessors & Mutators
+    public function getNameAttribute($value)
+    {
+        return ucfirst($value);
+    }
 }

@@ -91,7 +91,7 @@ Update Profile
 
   <div>
     <label for="address">Address</label><br>
-    <input type="text" id="address" name="address" value="{{ old('address', $user->address) }}" required class="@error('address') is-invalid @enderror">
+    <input type="text" id="address" name="address" value="{{ old('address', $user->address) }}" required>
 
     <br>
     <span class="error-message">
@@ -103,8 +103,9 @@ Update Profile
 
   <input type="submit" value="Update" class="button">
 </form>
-
-<button class="button">Change Password</button>
+<a href="{{ route('password.show_update') }}">
+  <button class="button">Change Password</button>
+</a>
 
 @endsection
 

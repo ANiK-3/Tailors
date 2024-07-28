@@ -31,4 +31,61 @@ Home
 
 <br>
 @includeIf('layouts.partials.footer')
+
 @endsection
+
+@push('script')
+{{-- <script src="{{mix('js/app.js')}}"></script>
+
+
+@vite('resources/js/app.js')
+<script>
+  setTimeout(() => {
+    window.Echo.private('users.1').listen('SendNotification', (e) => {
+      console.log(e)
+    });
+  }, 200);
+
+</script> --}}
+
+{{-- <script>
+  // Listen for request acceptance or decline notification sent to customer
+  window.Echo.private(`customers.{{Auth::id()}}`)
+.listen('RequestAcceptedEvent', (e) => {
+alert(e.message);
+window.location.href = `/fabric-details-form/${e.request_id}`;
+})
+.listen('RequestDeclinedEvent', (e) => {
+alert(e.message);
+// Implement further logic for declined request
+});
+
+</script> --}}
+
+<script src="{{ mix('js/navbar.js') }}"></script>
+<script>
+  // Listen for hire notification sent to tailor
+  window.Echo.private(`customers.{{Auth::id()}}`)
+    .listen('RequestAcceptedEvent',async (e) => {
+
+      console.log(e);
+      // store notification
+      const storeNotification = {
+        user_id: `{{Auth::id()}}`
+        , request_id: e.request_id
+        , message: e.message
+      }
+
+      const store = await http.post('/notifications/store', storeNotification, `{{ csrf_token() }}`);
+
+      addNotification(store);
+
+    })
+    .listen('RequestDeclinedEvent', async(e) => {
+      console.log(e.message);
+      alert(e.message);
+      // Implement further logic for declined request
+    });
+
+</script>
+@endpush

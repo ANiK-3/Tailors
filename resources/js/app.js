@@ -1,3 +1,3 @@
 import "./bootstrap";
-import "bootstrap";
-import "@popperjs/core";
+import "./http";
+// import "@popperjs/core";

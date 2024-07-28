@@ -1,5 +1,7 @@
 <?php
 
+use App\Events\SendHireNotification;
+use App\Events\SendNotification;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Admin\AdminController;
@@ -9,9 +11,31 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\TailorController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Auth\OtpController;
-use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Tailor;
+use App\Models\User;
+
+
+// NOTIFICATIONS
+Route::middleware('auth')->group(function () {
+  Route::get('/notifications', [NotificationController::class, 'index']);
+  Route::post('/notifications/store', [NotificationController::class, 'store']);
+  Route::post('/notifications/{id}/markAsRead', [NotificationController::class, 'markAsRead']);
+});
+//
+
+// routes/web.php
+// Route::post('send-hire-notification', [RequestController::class, 'sendHireNotification'])->name('send_hire_notification')->middleware('check.hire.timing', 'role:Customer');
+Route::post('send-hire-notification', [RequestController::class, 'sendHireNotification'])->name('send_hire_notification')->middleware('role:Customer');
+Route::get('/manage-request/{id}', [RequestController::class, 'showRequest'])->name('request.show')->middleware('role:Tailor');
+Route::post('/accept-request/{id}', [RequestController::class, 'acceptRequest'])->name('request.accept')->middleware('role:Tailor');
+Route::post('/decline-request/{id}', [RequestController::class, 'declineRequest'])->name('request.decline')->middleware('role:Tailor');
+Route::get('/fabric-details/{requestId}', function ($requestId) {
+  return view('request.fabric_details', compact('requestId'));
+})->name('fabric_details')->middleware('role:Customer');
+// Route::post('/fabric-details', [FabricController::class, 'store']);
 
 Route::get('/users/user', [UserController::class, 'getUser'])->name('user.get')->middleware('auth');
 
@@ -64,11 +88,15 @@ Route::middleware(['role:Customer'])->group(function () {
     Route::get('home', 'customerDashboard')->name('customer.dashboard');
     Route::get('profile', 'profile')->name('customer.profile');
     Route::get('profile/update', 'showUpdateProfile')->name('customer.show_update_profile');
-    Route::post('profile/update', 'UpdateProfile')->name('customer.update_profile');
+    Route::post('profile/update', 'updateProfile')->name('customer.update_profile');
+    Route::get('profile/password', 'showUpdatePassword')->name('password.show_update');
+    Route::post('profile/password/validate-current', 'validateCurrentPassword')->name('password.validateCurrent');
+    Route::post('profile/password/update', 'updatePassword')->name('password.update');
 
-    Route::get('tailor/{id}/appointment', [AppointmentController::class, 'show'])->name('appointment.show');
-    Route::post('appointment', [AppointmentController::class, 'create'])->name('appointment.create');
-    Route::post('/appointments/{appointment}', [AppointmentController::class, 'updateStatus'])->name('appointment.updateStatus');
+
+    // Route::get('tailor/hire/{id}', [HireController::class, 'send'])->name('hire.send');
+    // Route::post('appointment', [AppointmentController::class, 'create'])->name('appointment.create');
+    // Route::post('/appointments/{appointment}', [AppointmentController::class, 'updateStatus'])->name('appointment.updateStatus');
   });
 });
 
@@ -82,6 +110,8 @@ Route::middleware(['role:Tailor'])->group(function () {
   Route::controller(TailorController::class)->group(function () {
     Route::get('dashboard', 'tailorDashboard')->name('tailor.dashboard');
   });
+
+  // Route::get('response_hire/{id}', [HireController::class, 'responseHire'])->name('response_hire');
 });
 
 // Global Routes

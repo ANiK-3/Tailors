@@ -6,9 +6,11 @@ use App\Http\Requests\MeasurementsRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Gender;
 use App\Models\Tailor;
+
 
 class CustomerController extends Controller
 {
@@ -36,7 +38,7 @@ class CustomerController extends Controller
         return view('customer.update_profile', compact('user', 'genders'));
     }
 
-    public function UpdateProfile(Request $req)
+    public function updateProfile(Request $req)
     {
         $user = User::findOrFail(Auth::user()->id);
 
@@ -88,6 +90,44 @@ class CustomerController extends Controller
         return redirect()->back()->with('success', 'Successfully Updated.');
     }
 
+    public function showUpdatePassword()
+    {
+        return view('customer.update_password');
+    }
+
+    public function validateCurrentPassword(Request $request)
+    {
+        $password = $request->validate([
+            'current_password' => 'required|string',
+        ]);
+
+        $user = Auth::user();
+
+        if (Hash::check($password['current_password'], $user->password)) {
+            return response()->json(['valid' => true]);
+        } else {
+            return response()->json(['valid' => false]);
+        }
+    }
+    public function updatePassword(Request $req)
+    {
+        $password = $req->validate([
+            'current_password' => 'required|string',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        // Check if the current password is correct
+        if (!Hash::check($password['current_password'], $user->password)) {
+            return redirect()->back()->with('error', 'Current password is incorrect');
+        }
+
+        $user->update([
+            'password' => $password['password']
+        ]);
+        return redirect()->back()->with('success', 'Password updated successfully!');
+    }
     public function removeCCprefix($phone)
     {
         // Remove the country code prefix
