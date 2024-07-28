@@ -16,6 +16,7 @@
   align-items: center;
   color: aliceblue;
   justify-content: space-evenly;
+  z-index: 1;
 }
 .navbar a {
   text-decoration: none;
@@ -40,7 +41,11 @@
 }
 
 .border:hover {
-  border: 2px solid white;
+  border-bottom: 2px solid #f08804;
+}
+
+.navbar a.active {
+  border-bottom: 3px solid red;
 }
 
 /**box2*/
@@ -93,84 +98,4 @@
   background-color: #f08804;
   border-top-right-radius: 4px;
   border-bottom-right-radius: 4px;
-}
-
-footer {
-  background-color: black;
-  color: aliceblue;
-  text-align: center;
-  width: 100vw;
-  bottom: 0px;
-}
-
-#notification-container {
-  position: relative;
-  display: inline-block;
-}
-
-#notification-container .fa-bell {
-  font-size: 24px;
-  cursor: pointer;
-}
-
-#notification-counter {
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  background: #f08804;
-  color: white;
-  border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 12px;
-}
-
-#notification-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: none;
-  /* Hide the list by default */
-}
-
-#notification-container:hover #notification-list {
-  display: block;
-  /* Show the list on hover */
-  position: absolute;
-  color: black;
-  background: white;
-  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
-  right: 0;
-  top: 25px;
-  width: 200px;
-}
-
-#notification-list li {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-}
-#notification-list li a {
-  color: black;
-}
-
-#notification-list li:last-child {
-  border-bottom: none;
-}
-
-.notification-item {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-}
-
-.mark-read-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 2px 5px;
-  cursor: pointer;
-  font-size: 12px;
-}
-
-.mark-read-button:hover {
-  background-color: #0056b3;
 }

@@ -28,7 +28,7 @@
       , "newestOnTop": true
       , "progressBar": true
       , "preventDuplicates": true
-      , "timeOut": "1000"
+      // , "timeOut": "1000"
     , }
     @if(Session::has('success'))
     toastr.success("{{session('success')}}");

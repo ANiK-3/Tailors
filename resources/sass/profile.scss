@@ -41,16 +41,16 @@
         font-size: 20px;
     }
 
-    button,
-    input[type="submit"] {
-        background: none;
-        color: inherit;
-        border: none;
-        padding: 0;
-        font: inherit;
-        cursor: pointer;
-        outline: inherit;
-    }
+    // button,
+    // input[type="submit"] {
+    //     background: none;
+    //     color: inherit;
+    //     border: none;
+    //     padding: 0;
+    //     font: inherit;
+    //     cursor: pointer;
+    //     outline: inherit;
+    // }
 }
 
 a {
@@ -61,7 +61,7 @@ a {
 }
 
 .update_profile_container {
-    margin-top: 15px;
+    margin-top: 60px;
     display: grid;
     place-items: center;
 
@@ -70,6 +70,8 @@ a {
         height: 40px;
         font-size: 1.2rem;
         padding: 10px;
+        border-radius: 5px;
+        color: limegreen;
     }
     label {
         font-size: 1.2rem;

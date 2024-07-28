@@ -11983,6 +11983,7 @@ textarea.form-control-lg {
   align-items: center;
   color: aliceblue;
   justify-content: space-evenly;
+  z-index: 1;
 }
 .navbar a {
   text-decoration: none;
@@ -12007,7 +12008,11 @@ textarea.form-control-lg {
 }
 
 .border:hover {
-  border: 2px solid white;
+  border-bottom: 2px solid #f08804;
+}
+
+.navbar a.active {
+  border-bottom: 3px solid red;
 }
 
 /**box2*/

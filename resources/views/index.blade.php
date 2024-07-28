@@ -18,18 +18,22 @@ Home
 <div class="content">
   @foreach($tailors as $tailor)
   <a href="{{ route('tailor.show', $tailor->id) }}">
-    <div class="card" id="card" name="card">
-      <div class="pic">
-        <img src="{{ $tailor->shop_image ? asset('/storage/' . $tailor->shop_image) : asset('/storage/images/' . 'default_tailor.jpg') }}" alt="Shop Image">
+    <div class="box">
+      <div class="card" id="card" name="card">
+        <div class="pic">
+          <img src="{{ $tailor->shop_image ? asset('/storage/' . $tailor->shop_image) : asset('/storage/images/' . 'default_tailor.jpg') }}" alt="Shop Image">
+        </div>
+        <div class="shopName" name="shopName">{{ $tailor->shop_name }}</div>
+        <p name="aboutShop" style="color: aliceblue;">{{ $tailor->bio }}</p>
       </div>
-      <p name="shopName" style="color: aliceblue;">{{ $tailor->shop_name }}</p>
-      <p name="aboutShop" style="color: aliceblue; font-size:20px;">{{ $tailor->bio }}</p>
     </div>
   </a>
   @endforeach
+  @includeIf('layouts.partials.footer')
 </div>
 
 <br>
+
 @includeIf('layouts.partials.footer')
 
 @endsection
@@ -66,7 +70,7 @@ alert(e.message);
 <script>
   // Listen for hire notification sent to tailor
   window.Echo.private(`customers.{{Auth::id()}}`)
-    .listen('RequestAcceptedEvent',async (e) => {
+    .listen('RequestAcceptedEvent', async (e) => {
 
       console.log(e);
       // store notification
@@ -81,7 +85,7 @@ alert(e.message);
       addNotification(store);
 
     })
-    .listen('RequestDeclinedEvent', async(e) => {
+    .listen('RequestDeclinedEvent', async (e) => {
       console.log(e.message);
       alert(e.message);
       // Implement further logic for declined request

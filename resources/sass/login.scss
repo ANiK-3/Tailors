@@ -1,1 +1,40 @@
 // @import "~bootstrap/scss/bootstrap";
+
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 400px;
+    height: 400px;
+    background-color: burlywood;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background: linear-gradient(to right, #9c8c31, #513838, #555555);
+}
+
+.in {
+    width: 350px;
+    height: 30px;
+    border-radius: 5px;
+    border: none;
+}
+.remberMe {
+    display: flex;
+    justify-content: space-between;
+}
+.checkbox {
+    height: 20px;
+    background-color: aqua;
+}

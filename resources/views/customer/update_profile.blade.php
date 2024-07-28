@@ -9,6 +9,7 @@ Update Profile
 @endpush
 
 @section('content')
+@includeIf('layouts.partials.navbar');
 
 <div class="update_profile_container">
   {{-- <header>
