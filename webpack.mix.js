@@ -15,7 +15,6 @@ mix.browserSync({
     proxy: "http://127.0.0.1:8000",
 });
 
-const mix = require("laravel-mix");
 const Dotenv = require("dotenv-webpack");
 // require('dotenv').config();
 

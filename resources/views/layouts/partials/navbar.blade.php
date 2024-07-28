@@ -17,7 +17,7 @@
        </div>
      </div>
 
-     {{-- <div class="nav-search">
+     <div class="nav-search">
        <select name="" class="search-select">
          <option value="">All</option>
        </select>
@@ -25,13 +25,15 @@
        <div class="search-icon">
          <i class="fa-solid fa-magnifying-glass"></i>
        </div>
-     </div> --}}
+     </div>
 
+     @auth
      <div id="notification-container">
        <i class="fa fa-bell"></i>
        <span id="notification-counter">0</span>
        <ul id="notification-list"></ul>
      </div>
+     @endauth
 
      <div class="home border"><a href="{{ route('home') }}">Home</a></div>
      <div class="home border"><a href="{{ route('about_us') }}">About Us</a></div>

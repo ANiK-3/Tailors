@@ -1,10 +1,5 @@
-// Bootstrap
-@import "~bootstrap/scss/bootstrap";
+// @import "~bootstrap/scss/bootstrap";
 @import "navbar";
-
-// body {
-//     // background: rgb(71, 69, 69);
-// }
 
 .is-invalid {
     border: 1px solid #dc3545;
@@ -41,4 +36,13 @@
     display: block;
     color: aliceblue;
     font-size: 20px;
+}
+
+footer {
+    background-color: black;
+    color: aliceblue;
+    text-align: center;
+    display: fixed;
+    width: 100vw;
+    bottom: 1px;
 }

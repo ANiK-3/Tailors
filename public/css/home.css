@@ -229,15 +229,6 @@ a{
     position: relative;
 
 } */
-.footer {
-  background-color: black;
-  color: aliceblue;
-  text-align: center;
-  display: fixed;
-  width: 100vw;
-  bottom: 1px;
-}
-
 /*
 html{
     height: 100%;

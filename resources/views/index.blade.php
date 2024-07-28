@@ -29,7 +29,6 @@ Home
     </div>
   </a>
   @endforeach
-  @includeIf('layouts.partials.footer')
 </div>
 
 <br>

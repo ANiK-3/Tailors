@@ -8,9 +8,9 @@
   <meta name="user-id" content="{{ Auth::id() }}">
   <title>Tailor - @yield('title','website')</title>
   <link rel="stylesheet" href={{ mix('css/app.css') }}>
-  {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" /> --}}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   @stack('style')
-  {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet"> --}}
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
 </head>
 <body>
 
@@ -20,7 +20,7 @@
   <h2>Content Not Found</h2>
   @endif
 
-  {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
   <script>
     toastr.options = {
@@ -28,15 +28,15 @@
       , "newestOnTop": true
       , "progressBar": true
       , "preventDuplicates": true
-      // , "timeOut": "1000"
+        // , "timeOut": "1000"
     , }
     @if(Session::has('success'))
     toastr.success("{{session('success')}}");
-  @elseif(Session::has('error'))
-  toastr.error("{{session('error')}}");
-  @endif
+    @elseif(Session::has('error'))
+    toastr.error("{{session('error')}}");
+    @endif
 
-  </script> --}}
+  </script>
   <script src="{{mix('js/app.js')}}"></script>
   @stack('script')
 
