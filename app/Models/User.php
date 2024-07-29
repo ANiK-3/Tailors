@@ -77,6 +77,6 @@ class User extends Authenticatable
     }
     public function setAddressAttribute($value)
     {
-        return $this->attributes['name'] = strtolower($value);
+        return $this->attributes['address'] = strtolower($value);
     }
 }

@@ -23,7 +23,6 @@ Update Profile
 
   <div class="profile-picture">
     <img src="{{ $user->profile_picture ? asset('/storage/' . $user->profile_picture) : asset('/storage/images/' . 'default.jpg') }}" alt="Profile Picture">
-    <input type="file" name="profile_picture" accept="image/*">
 
     <span class="error-message">
       @error('profile_picture')

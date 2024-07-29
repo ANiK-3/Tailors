@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             StatusSeeder::class,
         ]);
 
-        // User::factory(30)->create();
-
+        // User::factory(12)->create();
     }
 }

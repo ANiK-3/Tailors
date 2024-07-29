@@ -16,7 +16,7 @@ class CustomerController extends Controller
 {
     public function customerDashboard()
     {
-        $tailors = Tailor::get();
+        $tailors = Tailor::where('accepted_by_admin', 1)->get();
         return view('index', compact('tailors'));
         // return view('customer.dashboard');
     }
