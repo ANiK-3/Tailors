@@ -21,6 +21,11 @@ class Tailor extends Model
         return $this->hasMany(Measurement::class);
     }
 
+    public function tailorTypes()
+    {
+        return $this->belongsToMany(TailorType::class, 'tailor_with_type'); // tailor_with_type == pivot table
+    }
+
     public function appointments()
     {
         return $this->hasMany(Appointment::class);

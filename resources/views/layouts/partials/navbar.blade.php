@@ -18,9 +18,11 @@
      </div>
 
      <div class="nav-search">
+
        <select name="" class="search-select">
          <option value="">All</option>
        </select>
+
        <input type="text" placeholder="Search" class="search-input">
        <div class="search-icon">
          <i class="fa-solid fa-magnifying-glass"></i>

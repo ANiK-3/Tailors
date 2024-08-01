@@ -10,14 +10,16 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Gender;
 use App\Models\Tailor;
+use App\Models\TailorType;
 
 
 class CustomerController extends Controller
 {
     public function customerDashboard()
     {
-        $tailors = Tailor::where('accepted_by_admin', 1)->get();
-        return view('index', compact('tailors'));
+        $tailorTypes = TailorType::get();
+        return view('index', compact('tailorTypes'));
+
         // return view('customer.dashboard');
     }
     public function profile()
@@ -127,6 +129,38 @@ class CustomerController extends Controller
             'password' => $password['password']
         ]);
         return redirect()->back()->with('success', 'Password updated successfully!');
+    }
+
+    public function getTailor(Request $req)
+    {
+        $name = $req->query('shop_name', '');
+        $type = $req->query('type', '');
+
+        $query = Tailor::query();
+
+        if ($name) {
+            $query->where('shop_name', 'like', "{$name}%");
+        }
+
+        if ($type) {
+            $query->whereHas('tailorTypes', function ($q) use ($type) {
+                $q->where('name', ucwords($type));
+            });
+        } else {
+            $query->where('accepted_by_admin', 1)->orderBy('shop_name');
+        }
+
+        $tailors = $query->paginate(10);
+
+        if ($tailors->isEmpty()) {
+            return response()->json([
+                "message" => "Tailor Not Found",
+            ], 404);
+        } else {
+            return response()->json([
+                "tailors" => $tailors,
+            ]);
+        }
     }
     public function removeCCprefix($phone)
     {

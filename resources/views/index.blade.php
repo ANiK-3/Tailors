@@ -9,86 +9,84 @@ Home
 @endpush
 
 @section('content')
-@includeIf('layouts.partials.navbar')
-<br>
-<br>
-<br>
-<br>
 
-<div class="content">
-  @foreach($tailors as $tailor)
-  <a href="{{ route('tailor.show', $tailor->id) }}">
-    <div class="box">
-      <div class="card" id="card" name="card">
-        <div class="pic">
-          <img src="{{ $tailor->shop_image ? asset('/storage/' . $tailor->shop_image) : asset('/storage/images/' . 'default_tailor.jpg') }}" alt="Shop Image">
+<nav>
+  <div class="navbar">
+    <a href="{{ route('home') }}">
+      <div class="nav-logo border">
+        <div class="logo">
+          <img src="{{ asset('/storage/images/' . 'tailorLogo5.jpg') }}" alt="Tailor">
         </div>
-        <div class="shopName" name="shopName">{{ $tailor->shop_name }}</div>
-        <p name="aboutShop" style="color: aliceblue;">{{ $tailor->bio }}</p>
+      </div>
+    </a>
+
+    <div class="nav-address border">
+      <p class="add-first">Deliver to</p>
+      <div class="add-icon">
+        <i class="fa-solid fa-location-dot"></i>
+        <p class="add-second">Sylhet</p>
       </div>
     </div>
-  </a>
-  @endforeach
+
+    <div class="nav-search">
+      <select name="" class="search-select">
+        <option value="">All</option>
+        @foreach($tailorTypes as $tailorType)
+        <option value="{{ $tailorType->name }}">{{ $tailorType->name }}</option>
+        @endforeach
+
+      </select>
+      <input type="text" placeholder="Search" class="search-input">
+      <div class="search-icon">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+    </div>
+
+    @auth
+    <div id="notification-container">
+      <i class="fa fa-bell"></i>
+      <span id="notification-counter">0</span>
+      <ul id="notification-list"></ul>
+    </div>
+    @endauth
+
+    <div class="home border"><a href="{{ route('home') }}">Home</a></div>
+    <div class="home border"><a href="{{ route('about_us') }}">About Us</a></div>
+    @auth
+    @can('customer')
+    <div class="home border"><a href="{{ route('customer.profile') }}">Profile</a></div>
+    <div class="home border"><a href="#">Order Details</a></div>
+    @elsecan('admin')
+    <div class="home border"><a href="{{ route('admin.index') }}">Dashboard</a></div>
+    @elsecan('tailor')
+    <div class="home border"><a href="{{ route('tailor.dashboard') }}">Dashboard</a></div>
+    @endcan
+    <div class="home border">
+      <form action="{{ route('logout') }}" method="post">
+        @csrf
+        <input type="submit" value="Logout" style="background-color: #f08804;">
+      </form>
+    </div>
+
+    @else
+    <div class="home border" style="background-color: #f08804;">
+      <a href="{{route('login')}}">Login</a>
+    </div>
+
+    @endauth
+
+  </div>
+</nav>
+
+<div id="message"></div>
+<div class="content">
+  {{-- dynamic data --}}
 </div>
 
-<br>
-
 @includeIf('layouts.partials.footer')
-
 @endsection
 
 @push('script')
-{{-- <script src="{{mix('js/app.js')}}"></script>
-
-
-@vite('resources/js/app.js')
-<script>
-  setTimeout(() => {
-    window.Echo.private('users.1').listen('SendNotification', (e) => {
-      console.log(e)
-    });
-  }, 200);
-
-</script> --}}
-
-{{-- <script>
-  // Listen for request acceptance or decline notification sent to customer
-  window.Echo.private(`customers.{{Auth::id()}}`)
-.listen('RequestAcceptedEvent', (e) => {
-alert(e.message);
-window.location.href = `/fabric-details-form/${e.request_id}`;
-})
-.listen('RequestDeclinedEvent', (e) => {
-alert(e.message);
-// Implement further logic for declined request
-});
-
-</script> --}}
-
-<script src="{{ mix('js/navbar.js') }}"></script>
-<script>
-  // Listen for hire notification sent to tailor
-  window.Echo.private(`customers.{{Auth::id()}}`)
-    .listen('RequestAcceptedEvent', async (e) => {
-
-      console.log(e);
-      // store notification
-      const storeNotification = {
-        user_id: `{{Auth::id()}}`
-        , request_id: e.request_id
-        , message: e.message
-      }
-
-      const store = await http.post('/notifications/store', storeNotification, `{{ csrf_token() }}`);
-
-      addNotification(store);
-
-    })
-    .listen('RequestDeclinedEvent', async (e) => {
-      console.log(e.message);
-      alert(e.message);
-      // Implement further logic for declined request
-    });
-
-</script>
+<script src="{{mix('js/home.js')}}"></script>
+<script src="{{mix('js/navbar.js')}}"></script>
 @endpush

@@ -21,6 +21,7 @@ const Dotenv = require("dotenv-webpack");
 mix.js("resources/js/app.js", "public/js")
     .js("resources/js/bootstrap.js", "public/js")
     .js("resources/js/echo.js", "public/js")
+    .js("resources/js/home.js", "public/js")
     .js("resources/js/navbar.js", "public/js")
     .js("resources/js/register.js", "public/js")
     .js("resources/js/profile.js", "public/js")

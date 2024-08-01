@@ -10,16 +10,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('tailors', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->string('shop_image')->nullable();
-            $table->string('shop_name')->nullable();
-            $table->string('shop_address')->nullable();
-            $table->string('specialty')->nullable();
-            $table->float('experience')->nullable();
-            $table->text('bio')->nullable();
-            $table->boolean('accepted_by_admin')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('tailors');
+        Schema::dropIfExists('customers');
     }
 };

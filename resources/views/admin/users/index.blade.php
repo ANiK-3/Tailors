@@ -85,38 +85,13 @@ Users
   </div>
 </div>
 @endsection
-
+ll
 @push('script')
 <script>
   document.addEventListener('DOMContentLoaded', async () => {
     const searchInput = document.querySelector(".search-input");
     const searchSelect = document.querySelector('.search-select');
     const searchIcon = document.querySelector('.search-icon i');
-
-    const getQueryParameter = (param) => {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get(param);
-    };
-
-    const updateURL = (name, role, page) => {
-      const url = new URL(window.location.href);
-      if (name) {
-        url.searchParams.set('name', name);
-      } else {
-        url.searchParams.delete('name');
-      }
-      if (role) {
-        url.searchParams.set('role', role);
-      } else {
-        url.searchParams.delete('role');
-      }
-      if (page) {
-        url.searchParams.set('page', page);
-      } else {
-        url.searchParams.delete('page');
-      }
-      window.history.pushState({}, '', url);
-    };
 
     searchInput.addEventListener("keyup", async (e) => {
       const name = e.target.value;
@@ -127,8 +102,8 @@ Users
     });
 
     searchSelect.addEventListener("change", async (e) => {
-      const role = e.target.value;
       const name = searchInput.value;
+      const role = e.target.value;
 
       updateURL(name, role, 1);
       await fetchUsers(name, role);
@@ -208,6 +183,31 @@ Users
         messageElement.textContent = 'Error fetching users. Please try again later.';
       }
     }
+
+    const getQueryParameter = (param) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    };
+
+    const updateURL = (name, role, page) => {
+      const url = new URL(window.location.href);
+      if (name) {
+        url.searchParams.set('name', name);
+      } else {
+        url.searchParams.delete('name');
+      }
+      if (role) {
+        url.searchParams.set('role', role);
+      } else {
+        url.searchParams.delete('role');
+      }
+      if (page) {
+        url.searchParams.set('page', page);
+      } else {
+        url.searchParams.delete('page');
+      }
+      window.history.pushState({}, '', url);
+    };
 
     // Initial Fetch with Query Parameters
     const initialName = getQueryParameter('name') || '';

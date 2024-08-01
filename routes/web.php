@@ -15,6 +15,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\RequestController;
 use Illuminate\Support\Facades\Route;
 use App\Models\Tailor;
+use App\Models\TailorType;
 use App\Models\User;
 
 
@@ -45,8 +46,8 @@ Route::get('/admin/create-shop', [AdminController::class, 'showCreateShop'])->na
 Route::post('/admin/create-shop', [AdminController::class, 'createShop'])->name('admin.create_shop');
 
 Route::get('/', function () {
-  $tailors = Tailor::where('accepted_by_admin', 1)->get();
-  return view('index', compact('tailors'));
+  $tailorTypes = TailorType::get();
+  return view('index', compact('tailorTypes'));
 })->name('home');
 
 Route::get('about_us', function () {
@@ -92,6 +93,8 @@ Route::middleware(['role:Customer'])->group(function () {
     Route::get('profile/password', 'showUpdatePassword')->name('password.show_update');
     Route::post('profile/password/validate-current', 'validateCurrentPassword')->name('password.validateCurrent');
     Route::post('profile/password/update', 'updatePassword')->name('password.update');
+
+    Route::get('/tailors/tailor', 'getTailor')->name('tailor.get');
 
 
     // Route::get('tailor/hire/{id}', [HireController::class, 'send'])->name('hire.send');

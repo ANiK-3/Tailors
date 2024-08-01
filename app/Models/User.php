@@ -33,6 +33,10 @@ class User extends Authenticatable
         return $this->hasMany(UserOtp::class);
     }
 
+    public function customer()
+    {
+        return $this->hasOne(Customer::class);
+    }
     public function tailor()
     {
         return $this->hasOne(Tailor::class);
