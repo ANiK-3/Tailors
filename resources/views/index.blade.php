@@ -82,6 +82,7 @@ Home
 <div class="content">
   {{-- dynamic data --}}
 </div>
+<div id="loader">Loading...</div>
 
 @includeIf('layouts.partials.footer')
 @endsection

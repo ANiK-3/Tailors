@@ -50,6 +50,8 @@ Route::get('/', function () {
   return view('index', compact('tailorTypes'));
 })->name('home');
 
+Route::get('/tailors/tailor', [CustomerController::class, 'getTailor'])->name('tailor.get');
+
 Route::get('about_us', function () {
   return view('about_us');
 })->name('about_us');
@@ -94,7 +96,7 @@ Route::middleware(['role:Customer'])->group(function () {
     Route::post('profile/password/validate-current', 'validateCurrentPassword')->name('password.validateCurrent');
     Route::post('profile/password/update', 'updatePassword')->name('password.update');
 
-    Route::get('/tailors/tailor', 'getTailor')->name('tailor.get');
+
 
 
     // Route::get('tailor/hire/{id}', [HireController::class, 'send'])->name('hire.send');

@@ -1,15 +1,10 @@
 document.addEventListener("DOMContentLoaded", async () => {
-    // Listen for request acceptance or decline notification sent to customer
-    //   window.Echo.private(`customers.{{Auth::id()}}`)
-    // .listen('RequestAcceptedEvent', (e) => {
-    // alert(e.message);
-    // window.location.href = `/fabric-details-form/${e.request_id}`;
-    // })
-    // .listen('RequestDeclinedEvent', (e) => {
-    // alert(e.message);
-    // // Implement further logic for declined request
-    // });
+    // requestListener();
+    // hireNotificationListener();
+    fetchTailors();
+});
 
+function hireNotificationListener() {
     // Listen for hire notification sent to tailor
     const csrfToken = document
         .querySelector('meta[name="csrf-token"]')
@@ -42,11 +37,27 @@ document.addEventListener("DOMContentLoaded", async () => {
             alert(e.message);
             // Implement further logic for declined request
         });
+}
 
+function requestListener() {
+    // Listen for request acceptance or decline notification sent to customer
+    window.Echo.private(`customers.{{Auth::id()}}`)
+        .listen("RequestAcceptedEvent", (e) => {
+            alert(e.message);
+            window.location.href = `/fabric-details-form/${e.request_id}`;
+        })
+        .listen("RequestDeclinedEvent", (e) => {
+            alert(e.message);
+            // Implement further logic for declined request
+        });
+}
+
+async function fetchTailors() {
     // Fetch Tailors
     const searchInput = document.querySelector(".search-input");
     const searchSelect = document.querySelector(".search-select");
     const searchIcon = document.querySelector(".search-icon i");
+    let currentPage = 1;
 
     searchInput.addEventListener("keyup", async (e) => {
         const shop_name = e.target.value;
@@ -77,10 +88,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function fetchTailors(shop_name = "", type = "", page = 1) {
         const messageElement = document.querySelector("#message");
         const content = document.querySelector(".content");
+        const loader = document.querySelector("#loader");
 
         // Clear previous results
         messageElement.textContent = "";
-        content.innerHTML = "";
 
         try {
             const response = await fetch(
@@ -89,16 +100,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             const data = await response.json();
 
+            if (page === 1) content.innerHTML = "";
+
             if (!data.tailors || data.tailors.length === 0) {
+                observer.unobserve(loader);
+                loader.innerText = "No more tailors to load";
                 messageElement.textContent = data.message;
                 return;
+            } else {
+                currentPage++;
             }
 
             data.tailors.data.forEach((tailor) => {
-                const link = "http://localhost:8000";
                 const shop_image = tailor.shop_image
-                    ? `${link}/storage/${tailor.shop_image}`
-                    : `${link}/storage/images/default_tailor.jpg`;
+                    ? `/storage/${tailor.shop_image}`
+                    : `/storage/images/default_tailor.jpg`;
 
                 content.innerHTML += `
               <a href="/tailor/${tailor.id}">
@@ -145,6 +161,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         window.history.pushState({}, "", url);
     };
 
+    const observer = new IntersectionObserver(
+        (entries) => {
+            if (entries[0].isIntersecting) {
+                const shop_name = searchInput.value;
+                const type = searchSelect.value;
+                fetchTailors(shop_name, type, currentPage);
+            }
+        },
+        { rootMargin: "20px" }
+    );
+    observer.observe(loader);
+
     // Initial Fetch with Query Parameters
     const initialShopName = getQueryParameter("shop_name") || "";
     const initialType = getQueryParameter("type") || "";
@@ -154,4 +182,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     searchSelect.value = initialType;
 
     await fetchTailors(initialShopName, initialType, initialPage);
-});
+}
