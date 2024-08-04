@@ -124,7 +124,7 @@ function _fetchTailors() {
                       break;
                     }
                     observer.unobserve(loader);
-                    loader.innerText = "No more tailors to load";
+                    loader.style.display = "none";
                     messageElement.textContent = data.message;
                     return _context7.abrupt("return");
                   case 22:
@@ -134,6 +134,7 @@ function _fetchTailors() {
                       var shop_image = tailor.shop_image ? "/storage/".concat(tailor.shop_image) : "/storage/images/default_tailor.jpg";
                       content.innerHTML += "\n              <a href=\"/tailor/".concat(tailor.id, "\">\n                <div class=\"box\">\n                  <div class=\"card\" id=\"card\" name=\"card\">\n                    <div class=\"pic\">\n                       <img src=").concat(shop_image, " alt=\"Shop Image\">\n                    </div>\n                    <div class=\"shopName\" name=\"shopName\">").concat(tailor.shop_name, "</div>\n                    <p name=\"aboutShop\" style=\"color: aliceblue;\">").concat(tailor.bio, "</p>\n                  </div>\n                </div>\n              </a>\n            ");
                     });
+                    // lastCardObserver();
                     _context7.next = 29;
                     break;
                   case 26:
@@ -185,11 +186,10 @@ function _fetchTailors() {
                   case 0:
                     shop_name = searchInput.value;
                     type = e.target.value;
-                    console.log(shop_name, type);
                     updateURL(shop_name, type, 1);
-                    _context5.next = 6;
+                    _context5.next = 5;
                     return fetchTailors(shop_name, type);
-                  case 6:
+                  case 5:
                   case "end":
                     return _context5.stop();
                 }
@@ -245,9 +245,30 @@ function _fetchTailors() {
               fetchTailors(shop_name, type, currentPage);
             }
           }, {
-            rootMargin: "20px"
+            threshold: 1
           });
           observer.observe(loader);
+
+          // const observer = new IntersectionObserver(
+          //     (entries) => {
+          //         const lastCard = entries[0];
+          //         if (!lastCard.isIntersecting) return;
+          //         loadNewCards();
+          //         observer.unobserve(lastCard.target);
+          //         observer.observe(document.querySelector(".content a:last-child"));
+          //     },
+          //     { threshold: 1 }
+          // );
+
+          // const lastCardObserver = () => {
+          //     observer.observe(document.querySelector(".content a:last-child"));
+          // };
+
+          // function loadNewCards() {
+          //     const shop_name = searchInput.value;
+          //     const type = searchSelect.value;
+          //     fetchTailors(shop_name, type, currentPage);
+          // }
 
           // Initial Fetch with Query Parameters
           initialShopName = getQueryParameter("shop_name") || "";

@@ -150,7 +150,7 @@ class CustomerController extends Controller
             $query->where('accepted_by_admin', 1)->orderBy('shop_name');
         }
 
-        $tailors = $query->paginate(5);
+        $tailors = $query->paginate(7);
 
         if ($tailors->isEmpty()) {
             return response()->json([

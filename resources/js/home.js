@@ -71,8 +71,6 @@ async function fetchTailors() {
         const shop_name = searchInput.value;
         const type = e.target.value;
 
-        console.log(shop_name, type);
-
         updateURL(shop_name, type, 1);
         await fetchTailors(shop_name, type);
     });
@@ -104,7 +102,7 @@ async function fetchTailors() {
 
             if (!data.tailors || data.tailors.length === 0) {
                 observer.unobserve(loader);
-                loader.innerText = "No more tailors to load";
+                loader.style.display = "none";
                 messageElement.textContent = data.message;
                 return;
             } else {
@@ -130,6 +128,7 @@ async function fetchTailors() {
               </a>
             `;
             });
+            // lastCardObserver();
         } catch (error) {
             messageElement.textContent =
                 "Error fetching users. Please try again later.";
@@ -169,9 +168,30 @@ async function fetchTailors() {
                 fetchTailors(shop_name, type, currentPage);
             }
         },
-        { rootMargin: "20px" }
+        { threshold: 1 }
     );
     observer.observe(loader);
+
+    // const observer = new IntersectionObserver(
+    //     (entries) => {
+    //         const lastCard = entries[0];
+    //         if (!lastCard.isIntersecting) return;
+    //         loadNewCards();
+    //         observer.unobserve(lastCard.target);
+    //         observer.observe(document.querySelector(".content a:last-child"));
+    //     },
+    //     { threshold: 1 }
+    // );
+
+    // const lastCardObserver = () => {
+    //     observer.observe(document.querySelector(".content a:last-child"));
+    // };
+
+    // function loadNewCards() {
+    //     const shop_name = searchInput.value;
+    //     const type = searchSelect.value;
+    //     fetchTailors(shop_name, type, currentPage);
+    // }
 
     // Initial Fetch with Query Parameters
     const initialShopName = getQueryParameter("shop_name") || "";

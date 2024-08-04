@@ -134,12 +134,12 @@ a{
 } */
 
 .content {
-    height: 100vw;
-    width: 100vw;
+    height: 49dvw;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    align-content: center;
     gap: 15px;
 }
 
