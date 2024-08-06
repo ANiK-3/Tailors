@@ -18,7 +18,7 @@ Manage Request
     <tr>
       <td>{{$key}}</td>
       <td>{{$tailor->shop_name}}</td>
-      <td><a href="{{ route('tailor.show_info',$tailor->id) }}"><button class="button">View</button></a></td>
+      <td><a href="{{ route('admin.show_tailor_info',$tailor->id) }}"><button class="button">View</button></a></td>
       <td>
         <form action="{{ route('admin.accept_tailor_request', $tailor->id) }}" method="POST">
           @csrf

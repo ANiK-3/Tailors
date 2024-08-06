@@ -12,9 +12,9 @@ Route::middleware(['role:Tailor'])->group(function () {
     Route::get('dashboard', 'tailorDashboard')->name('tailor.dashboard');
   });
 
-  Route::get('/manage-request/{id}', [RequestController::class, 'showRequest'])->name('request.show')->middleware('role:Tailor');
-  Route::post('/accept-request/{id}', [RequestController::class, 'acceptRequest'])->name('request.accept')->middleware('role:Tailor');
-  Route::post('/decline-request/{id}', [RequestController::class, 'declineRequest'])->name('request.decline')->middleware('role:Tailor');
+  Route::get('/manage-request/{id}', [RequestController::class, 'showRequest'])->name('request.show');
+  Route::post('/accept-request/{id}', [RequestController::class, 'acceptRequest'])->name('request.accept');
+  Route::post('/decline-request/{id}', [RequestController::class, 'declineRequest'])->name('request.decline');
 
   // Route::get('response_hire/{id}', [HireController::class, 'responseHire'])->name('response_hire');
 });
