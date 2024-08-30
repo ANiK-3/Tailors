@@ -1,13 +1,26 @@
  <!-- Navigation-->
+<link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
+
  <nav>
    <div class="navbar">
+
+    @if($logo)
      <a href="{{ route('home') }}">
        <div class="nav-logo border">
          <div class="logo">
-           <img src="{{ asset('/storage/images/' . 'tailorLogo5.jpg') }}" alt="Tailor">
+          <img src="{{ asset('/storage/' . $logo->file_path) }}" alt="{{ $logo->file_name }}">
          </div>
        </div>
-     </a>
+      </a>
+    @else
+    <a href="{{ route('home') }}">
+       <div class="nav-logo border">
+         <div class="logo">
+          Tailor
+         </div>
+       </div>
+      </a>
+    @endif
 
      <div class="nav-address border">
        <p class="add-first">Deliver to</p>
@@ -21,6 +34,14 @@
 
        <select name="" class="search-select">
          <option value="">All</option>
+
+        {{-- Different Content Based on Route --}}
+        @if(request()->is('/'))
+          @foreach($tailorTypes as $tailorType)
+          <option value="{{ $tailorType->name }}">{{ $tailorType->name }}</option>
+          @endforeach
+        @endif
+
        </select>
 
        <input type="text" placeholder="Search" class="search-input">

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\AssetController;
 
 // Admin Routes
 
@@ -20,7 +21,12 @@ Route::middleware('role:Admin')->group(function () {
   Route::post('admin/accept-tailor-request/{id}', [AdminController::class, 'acceptRequest'])->name('admin.accept_tailor_request');
   Route::post('admin/decline-tailor-request{id}', [AdminController::class, 'declineRequest'])->name('admin.decline_tailor_request');
 
-   Route::resource('users', UserController::class);
+  // Assets
+  Route::get('admin/assets', [AssetController::class, 'index'])->name('asset.index');
+  Route::get('admin/upload', [AssetController::class, 'showUploadForm'])->name('asset.show_upload');
+  Route::post('admin/upload', [AssetController::class, 'upload'])->name('asset.upload');
+
+  Route::resource('users', UserController::class);
   Route::resource('role', RoleController::class);
   Route::resource('admin', AdminController::class);
 });

@@ -131,7 +131,7 @@ function _fetchTailors() {
                     currentPage++;
                   case 23:
                     data.tailors.data.forEach(function (tailor) {
-                      var shop_image = tailor.shop_image ? "/storage/".concat(tailor.shop_image) : "/storage/images/default_tailor.jpg";
+                      var shop_image = tailor.shop_image ? "/storage/uploads/".concat(tailor.shop_image) : "/storage/uploads/default_tailor.jpg";
                       content.innerHTML += "\n              <a href=\"/tailor/".concat(tailor.id, "\">\n                <div class=\"box\">\n                  <div class=\"card\" id=\"card\" name=\"card\">\n                    <div class=\"pic\">\n                       <img src=").concat(shop_image, " alt=\"Shop Image\">\n                    </div>\n                    <div class=\"shopName\" name=\"shopName\">").concat(tailor.shop_name, "</div>\n                    <p name=\"aboutShop\" style=\"color: aliceblue;\">").concat(tailor.bio, "</p>\n                  </div>\n                </div>\n              </a>\n            ");
                     });
                     // lastCardObserver();

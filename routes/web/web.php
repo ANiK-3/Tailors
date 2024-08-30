@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MeasurementController;
 use App\Models\TailorType;
+use App\Models\Asset;
 
 
 Route::get('/', function () {

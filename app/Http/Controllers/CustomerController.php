@@ -76,13 +76,13 @@ class CustomerController extends Controller
         ]);
 
         if ($req->hasFile('profile_picture')) {
-            $old_profile_picture = public_path("storage/") . $user->profile_picture;
+            $old_profile_picture = public_path("storage") . $user->profile_picture;
 
             if (file_exists($old_profile_picture)) {
                 @unlink($old_profile_picture);
             }
 
-            $path = $credentials['profile_picture']->store('images', 'public');
+            $path = $credentials['profile_picture']->store('uploads', 'public');
 
             $user->update([
                 'profile_picture' => $path
@@ -144,7 +144,7 @@ class CustomerController extends Controller
 
         if ($type) {
             $query->whereHas('tailorTypes', function ($q) use ($type) {
-                $q->where('name', ucwords($type));
+                $q->where('name', ucwords($type))->where('accepted_by_admin', 1);
             });
         } else {
             $query->where('accepted_by_admin', 1)->orderBy('shop_name');

@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Pagination\Paginator;
 use App\Models\User;
 
+use Illuminate\Support\Facades\View;
+use App\Models\Asset;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -22,6 +25,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        View::composer('layouts.partials.navbar', function ($view) {
+            $logo = Asset::where('asset_type', 'logo')->latest()->first();
+            $view->with('logo', $logo);
+        });
+
+        View::composer('layouts.app', function ($view) {
+            $background = Asset::where('asset_type', 'background')->latest()->first();
+            $view->with('background', $background);
+        });
+
         Paginator::useBootstrapFive();
 
         Gate::define('admin', function (User $user) {

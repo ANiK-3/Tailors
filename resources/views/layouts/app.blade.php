@@ -8,12 +8,23 @@
   <meta name="user-id" content="{{ Auth::id() }}">
   <title>Tailor - @yield('title','website')</title>
   <link rel="stylesheet" href={{ mix('css/app.css') }}>
+  <style>
+    body {
+      @hasSection('background-image') background-image: url('@yield('background-image')');
+      @else background-image: url('{{ asset('/storage/' . $background->file_path) }}');
+      @endif background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+      min-height: 100vh;
+    }
+
+  </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   @stack('style')
   <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.css" rel="stylesheet">
 </head>
 <body>
-
+  @includeIf('layouts.partials.navbar')
   @hasSection('content')
   @yield('content')
   @else

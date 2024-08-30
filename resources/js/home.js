@@ -111,8 +111,8 @@ async function fetchTailors() {
 
             data.tailors.data.forEach((tailor) => {
                 const shop_image = tailor.shop_image
-                    ? `/storage/${tailor.shop_image}`
-                    : `/storage/images/default_tailor.jpg`;
+                    ? `/storage/uploads/${tailor.shop_image}`
+                    : `/storage/uploads/default_tailor.jpg`;
 
                 content.innerHTML += `
               <a href="/tailor/${tailor.id}">

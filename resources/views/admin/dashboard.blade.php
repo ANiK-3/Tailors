@@ -10,6 +10,9 @@
   <div>
     <a href="{{ route('admin.manage_shop') }}"><button class="button">Manage Shop</button></a>
   </div>
+  <div>
+    <a href="{{ route('asset.index') }}"><button class="button">Assets</button></a>
+  </div>
 
 </div>
 @endsection

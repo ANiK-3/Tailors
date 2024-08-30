@@ -22,7 +22,7 @@ Update Profile
   @csrf
 
   <div class="profile-picture">
-    <img src="{{ $user->profile_picture ? asset('/storage/' . $user->profile_picture) : asset('/storage/images/' . 'default.jpg') }}" alt="Profile Picture">
+    <img src="{{ $user->profile_picture ? asset('/storage/' . $user->profile_picture) : asset('/storage/uploads/' . 'default_user.jpg') }}" alt="Profile Picture">
 
     <span class="error-message">
       @error('profile_picture')

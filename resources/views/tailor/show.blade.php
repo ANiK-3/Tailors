@@ -27,7 +27,7 @@
 <div class="content">
   <div class="profile">
     <div class="shopProfileImage">
-      <img src="{{ $tailor->shop_image ? asset('/storage/' . $tailor->shop_image) : asset('/storage/images/' . 'default_tailor.jpg') }}" alt="Shop Image">
+      <img src="{{ $tailor->shop_image ? asset('/storage/' . $tailor->shop_image) : asset('/storage/uploads/' . 'default_tailor.jpg') }}" alt="Shop Image">
     </div>
     <div class="shopNamePlace">
       <div class="shopName">{{ $tailor->shop_name }}</div>

@@ -1,2 +1,0 @@
-@extends('name')
-fhdjsh

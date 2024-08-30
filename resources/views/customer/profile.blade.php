@@ -19,7 +19,7 @@ Profile
 
   <div class="profile">
     <div class="profile-pic">
-      <img src="{{ $user->profile_picture ? asset('/storage/' . $user->profile_picture) : asset('/storage/images/' . 'default.jpg') }}" alt="Profile Picture">
+      <img src="{{ $user->profile_picture ? asset('/storage/' . $user->profile_picture) : asset('/storage/uploads/' . 'default_user.jpg') }}" alt="Profile Picture">
     </div>
     <div class="profile-name">{{ $user->name }}</div>
     <p>{{ $user->email }}</p>
